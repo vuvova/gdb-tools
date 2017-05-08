@@ -1,0 +1,5 @@
+*.pyc
+.*.swp
+.gdb_history
+a.out
+test.reject
