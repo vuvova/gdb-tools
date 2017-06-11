@@ -1,11 +1,50 @@
 from __future__ import unicode_literals
-from arpeggio import ZeroOrMore, Optional, EOF, RegExMatch, \
-                     ParserPython, PTNodeVisitor, visit_parse_tree
+from arpeggio import ZeroOrMore, Optional, EOF, RegExMatch, Match, Terminal, \
+                     ParserPython, PTNodeVisitor, visit_parse_tree, OneOrMore
 import gdb
 import expr
 import re
 
 escapes=r"""\\(?:[abefnrtv"'?]|[0-7]{1,3}|x[0-9a-fA-F]+|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})"""
+
+# typespec parser
+types = dict()
+def make_typespec_parser():
+    self = Match('(cast)')
+    def chars(): return RegExMatch(r'[0-9a-zA-Z_*& :,]+')
+    def ts(): return OneOrMore([chars,('(',ts,')'),('[',ts,']'),('<',ts,'>')])
+    def cast(): return '(',ts,')'
+    parser=ParserPython(cast, autokwd=True, debug=False)
+    def parse_ts(s):
+        try:
+            parse_tree=parser.parse(s)
+            tstr = s[parse_tree[1].position:parse_tree[2].position]
+            if tstr not in types:
+                t = gdb.parse_and_eval('('+tstr+' *)0').type.target()
+                types[tstr] = t
+            return (parser.position, tstr)
+        except:
+            return (0, None)
+    def parse(parser):
+        c_pos = parser.position
+        (matchlen, t) = parse_ts(parser.input[c_pos:])
+        if t:
+            matched = parser.input[c_pos:c_pos + matchlen]
+            if parser.debug:
+                parser.dprint(
+                    "++ Match '%s' at %d => '%s'" %
+                    (matched, c_pos, parser.context(matchlen)))
+            parser.position += matchlen
+            return Terminal(self, c_pos, t)
+        else:
+            if parser.debug:
+                parser.dprint("-- NoMatch at {}".format(c_pos))
+            parser._nm_raise(self, c_pos, parser)
+    self.to_match=self.rule_name
+    self._parse = parse
+    return self
+
+cast = make_typespec_parser()
 
 def real(): return RegExMatch(r'\d+(([eE][+-]?\d+)|\.\d+([eE][+-]?\d+)?)')
 def hexadecimal(): return RegExMatch(r'0[xX][0-9A-Fa-f]*\b')
@@ -29,7 +68,7 @@ def term19(): return term19a, ZeroOrMore([
             ('[', expression, ']'),
             ('[[', expression, ']]'),
         ])
-def term18(): return ZeroOrMore(['&&/', '||/', '#/', '-', '*', '&', '!', '~']), term19,
+def term18(): return ZeroOrMore(['&&/', '||/', '#/', '-', '*', '&', '!', '~', cast]), term19,
 def term17(): return term18, ZeroOrMore(['/', '*', '%'], term18)
 def term16(): return term17, ZeroOrMore(['-', '+'], term17)
 def term15(): return term16, ZeroOrMore(['<<', '>>'], term16)
@@ -135,6 +174,7 @@ class DuelVisitor(PTNodeVisitor):
             elif op == '~':   r = expr.Unary(op, r, lambda x: ~x)
             elif op == '++':  not_implemented()
             elif op == '--':  not_implemented()
+            else:             r = expr.Unary('('+op+')', r, lambda x: x.cast(types[op]))
         return r
     def visit_term17(self, node, ch):
         l = ch.pop(0)

@@ -178,12 +178,12 @@ The complete list of operators, in the precedence order:
   becomes equal to `y`. If `y` is a sequence of values, stops when at
   least one value in the sequence is true, and prints `x` if at least
   one value in the sequence is false.
-* `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `&&/x`, `||/x` - first five are
-  conventional unary C operators, the last three are *grouping*
-  operators.  First counts the numbers of values of `x`, second
-  returns a boolean AND of all values of `x`, third — boolean OR. Just
-  like in C, AND and OR operators stop as soon as the result value is
-  known
+* `(cast)x`, `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `&&/x`, `||/x` -
+  first six are conventional unary C operators, the last three are
+  *grouping* operators.  The first one counts the numbers of values of
+  `x`, second returns a boolean AND of all values of `x`, third —
+  boolean OR. Just like in C, AND and OR operators are lazy and stop
+  as soon as the result value is known
 * `x/y`, `x*y`, `x%y` - conventional C operators
 * `x-y`, `x+y` - conventional C operators
 * `x<<y`, `x>>y` - conventional C operators
@@ -337,7 +337,6 @@ Features of the original Duel, that are not implemented in the
 Duel.py yet:
 
 * Builtins: `frame()`, `sizeof()`, `frames_no`, `func.x`
-* Casts: `(T type)x`
 * Variables: `int i; i=5; i++`
 * Assignments: `x[..10]=0`
 * `x;y` operator
