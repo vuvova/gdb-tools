@@ -29,7 +29,7 @@ def term19(): return term19a, ZeroOrMore([
             ('[', expression, ']'),
             ('[[', expression, ']]'),
         ])
-def term18(): return ZeroOrMore(['&&/', '||/', '#/', '-', '*', '&', '!', '~', '++', '--']), term19,
+def term18(): return ZeroOrMore(['&&/', '||/', '#/', '-', '*', '&', '!', '~']), term19,
 def term17(): return term18, ZeroOrMore(['/', '*', '%'], term18)
 def term16(): return term17, ZeroOrMore(['-', '+'], term17)
 def term15(): return term16, ZeroOrMore(['<<', '>>'], term16)
@@ -42,14 +42,14 @@ def term9():  return term10, ZeroOrMore('|', term10)
 def term8():  return term9, ZeroOrMore('&&', term9)
 def term7():  return term8, ZeroOrMore('||', term8)
 def term6():  return term7, Optional('?', term6, ':', term6)
-def term5():  return term6, ZeroOrMore(['=', '+=', '-=', '*=', '/='], term6)
-def term4():  return Optional(ident, ':='), term5
+#def term5():  return term6, ZeroOrMore(['=', '+=', '-=', '*=', '/='], term6)
+def term4():  return Optional(ident, ':='), term6
 def term3():  return term4, ZeroOrMore(',', term4)
 def term2():  return term3, ZeroOrMore('=>', term1)
 def ifterm(): return 'if', '(', expression , ')', term1, Optional('else', term1)
-def whileterm(): return 'while', '(', expression , ')', term1
-def forterm(): return 'for', '(', term2, ';', term2, ';', term2, ')', term1
-def term1():  return [ ifterm, whileterm, forterm, term2 ]
+#def whileterm(): return 'while', '(', expression , ')', term1
+#def forterm(): return 'for', '(', term2, ';', term2, ';', term2, ')', term1
+def term1():  return [ ifterm, term2 ]
 def term0():  return term1, ZeroOrMore(';', term1)
 def expression(): return term0,
 def input(): return expression, EOF

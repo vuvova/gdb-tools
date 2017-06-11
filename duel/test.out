@@ -39,7 +39,7 @@ Try "dl operators" or "dl longhelp"
 2.0e1 = 20
 020 = 16
 0x20 = 32
-Expected 'if' or 'while' or 'for' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or '++' or '--' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
+Expected 'if' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
 foo = 1
 bar = 2
 s = 0x400544 "s1"
