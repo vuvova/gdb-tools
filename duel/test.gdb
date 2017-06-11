@@ -134,4 +134,7 @@ dl tree-->left->(if(v>10)v else v+100)
 dl #/(100..)#i@(i > 10)
 dl tree-->right->(if(v%2)v*v)
 dl (100..=>if(&&/(2,3..(_-1)=>__%_ )) _)[[..5]]
+start
+dl strncmp("foo", "bar", 1..3)
+c
 quit

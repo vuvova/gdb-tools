@@ -15,13 +15,13 @@ def char(): return RegExMatch(r"'([^'\\]|"+escapes+")'")
 def string(): return RegExMatch(r'"([^\\"]|'+escapes+')*"')
 def ident(): return RegExMatch(r'[A-Za-z_]\w*')
 def underscores(): return RegExMatch(r'_+')
-def builtin(): return ['frame', 'sizeof'], '(', expression, ')'
+def ident_or_func(): return ident, Optional('(', Optional(expression), ')')
 def parens(): return [('(', expression, ')'), ('{', expression, '}')]
-def term21(): return [real, hexadecimal, decimal, octal, char, string, underscores, ident]
+def term21(): return [real, hexadecimal, decimal, octal, char, string,
+                      underscores, ident_or_func ]
 def term20(): return [
             term21,
-            parens,
-            builtin
+            parens
         ]
 def term19a(): return term20, Optional('#', ident)
 def term19(): return term19a, ZeroOrMore([
@@ -98,11 +98,15 @@ class DuelVisitor(PTNodeVisitor):
         return expr.Ident(node.value)
     def visit_underscores(self, node, ch):
         return expr.Underscore(node.value)
+    def visit_ident_or_func(self, node, ch):
+        if len(ch) == 1: return ch[0]
+        if len(ch) == 3: return expr.Call(ch[0], expr.List([]))
+        if isinstance(ch[2], expr.List): return expr.Call(ch[0], ch[2])
+        return expr.Call(ch[0], expr.List([ch[2]]))
     def visit_parens(self, node, ch):
         op, arg = ch[0], ch[1]
         if op == '(': return expr.Unary('({})', arg, lambda x: x)
         if op == '{': return expr.Curlies(arg)
-    def visit_builtin(self, node, ch): not_implemented()
     def visit_term19a(self, node, ch):
         if len(ch) == 1: return ch[0]
         return expr.Enumerate(ch[0], ch[2])

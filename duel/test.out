@@ -39,7 +39,7 @@ Try "dl operators" or "dl longhelp"
 2.0e1 = 20
 020 = 16
 0x20 = 32
-Expected 'if' or 'while' or 'for' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or '++' or '--' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or 'frame' or 'sizeof' or '..' at position (1, 1) => '*019'.
+Expected 'if' or 'while' or 'for' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or '++' or '--' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
 foo = 1
 bar = 2
 s = 0x400544 "s1"
@@ -258,3 +258,10 @@ tree-->right[[3]]->(if(v % 2) v * v) = 49
 (100.. => if(&&/(2,3..(_ - 1) => __ % _)) _)[[2]] = 107
 (100.. => if(&&/(2,3..(_ - 1) => __ % _)) _)[[3]] = 109
 (100.. => if(&&/(2,3..(_ - 1) => __ % _)) _)[[4]] = 113
+Temporary breakpoint 1 at 0x4004ba: file test.c, line 15.
+
+Temporary breakpoint 1, main () at test.c:15
+15	  return 0;
+strncmp("foo","bar",1) = 4
+strncmp("foo","bar",2) = 4
+strncmp("foo","bar",3) = 4

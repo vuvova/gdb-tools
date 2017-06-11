@@ -159,6 +159,9 @@ different types, as long as they both have a field `z`.
 Operators
 ---------
 
+Variables and functions of the program being debugged can be read and
+called normally and work as expected.
+
 The complete list of operators, in the precedence order:
 
 * `(x)`, `{x}` - curly braces work as parentheses, but print the value
@@ -319,6 +322,10 @@ Walk the binary tree:
 
     dl root-->(left,right)->key
 
+Select matching strings from the array:
+
+    dl strncmp(items[i:=0..20], "foo", 3) ==? 0 => items[i]
+
 Find first 10 primes greater than 1000:
 
     dl (1000..=>if(&&/(2,3.._-1=>__%_ )) _)[[..10]]
@@ -331,7 +338,6 @@ Duel.py yet:
 
 * Builtins: `frame()`, `sizeof()`, `frames_no`, `func.x`
 * Casts: `(T type)x`
-* Function calls: `strcmp(a, "b")`
 * Variables: `int i; i=5; i++`
 * Assignments: `x[..10]=0`
 * `x;y` operator

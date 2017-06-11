@@ -47,8 +47,8 @@ class Ident(Expr):
             except gdb.error: self.scope = None
         try: self.sym = gdb.lookup_symbol(self.name_)[0]
         except gdb.error: self.sym = gdb.lookup_global_symbol(self.name_)
-        if not self.sym: raise NameError('No symbol "'+self.name_+'" in current context.')
-        return self.symval(self.sym)
+        if self.sym: return self.symval(self.sym)
+        return gdb.parse_and_eval(self.name_)
 
 class Underscore(Expr):
     def __init__(self, n): self.name_ = n
@@ -253,3 +253,27 @@ class Foreach(BinaryBase):
             for n2,v2 in self.arg2_.eval():
                 yield n2, v2
             underscores.pop()
+
+class Call(BinaryBase):
+    name_ = '{}({})'
+    def eval(self):
+        for n1,v1 in self.arg1_.eval():
+            args = self.arg2_.args_
+            gens = [] + args
+            nams = [] + args
+            vals = [] + args
+            cur = -1
+            while True:
+                while cur < len(args)-1:
+                    cur += 1
+                    gens[cur] = args[cur].eval()
+                    nams[cur], vals[cur] = next(gens[cur])
+                yield self.name_.format(n1, ','.join(nams)), v1(*vals)
+                repeat = True
+                while repeat and cur >= 0:
+                    repeat = False
+                    try: nams[cur], vals[cur] = next(gens[cur])
+                    except StopIteration:
+                        cur -= 1
+                        repeat = True
+                if cur < 0: break
