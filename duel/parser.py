@@ -36,7 +36,7 @@ def term15(): return term16, ZeroOrMore(['<<', '>>'], term16)
 def term14(): return [(term15, Optional('..', Optional(term15))), ('..', term15)]
 def term13(): return term14, ZeroOrMore(['<=?', '>=?', '<?', '>?','<=', '>=', '<', '>' ], term14)
 def term12(): return term13, ZeroOrMore(['==?', '!=?', '==', '!='], term13)
-def term11(): return term12, ZeroOrMore(RegExMatch(r'&(?!&)'), term12)
+def term11(): return term12, ZeroOrMore(RegExMatch(r'&(?!&)', str_repr='&'), term12)
 def term10(): return term11, ZeroOrMore('^', term11)
 def term9():  return term10, ZeroOrMore('|', term10)
 def term8():  return term9, ZeroOrMore('&&', term9)
