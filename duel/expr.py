@@ -97,14 +97,13 @@ class Filter(Binary):
                     yield self.name_.format(n1, n2), v1
 
 class Struct(BinaryBase):
-    def __init__(self, a1, n, a2, deref):
+    def __init__(self, a1, n, a2):
         super (Struct, self).__init__ (a1, a2)
-        self.deref, self.name_ = deref, n
+        self.name_ = n
     @scoped
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             underscores.append(v1)
-            if self.deref: v1 = v1.dereference()
             scopes.append(v1)
             for n2,v2 in self.arg2_.eval():
                 yield self.name_.format(n1, n2), v2

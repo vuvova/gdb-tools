@@ -154,8 +154,8 @@ class DuelVisitor(PTNodeVisitor):
         while len(ch):
             op, r = ch.pop(0), ch.pop(0)
             if   op == '[':   l, _ = expr.Binary(l, '{}[{}]', r, lambda x,y: x[int(y)]), ch.pop(0)
-            elif op == '.':   l    = expr.Struct(l, '{}.{}', r, False)
-            elif op == '->':  l    = expr.Struct(l, '{}->{}', r, True)
+            elif op == '.':   l    = expr.Struct(l, '{}.{}', r)
+            elif op == '->':  l    = expr.Struct(l, '{}->{}', r)
             elif op == '-->': l    = expr.StructWalk(l, r)
             elif op == '[[':  l, _ = expr.TakeNth(l, r), ch.pop(0)
             elif op == '@':   l    = expr.Until(l, r)
