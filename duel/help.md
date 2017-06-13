@@ -174,10 +174,10 @@ The complete list of operators, in the precedence order:
   `x->y->y`, etc until NULL. The fourth is a familiar C array element
   access, the fifth takes the `y`-th value in the sequence of values
   of `x`. The last one stops `x` from generating values as soon as `y`
-  becomes true. If `y` is a literal, stops as soon as `x` value
-  becomes equal to `y`. If `y` is a sequence of values, stops when at
-  least one value in the sequence is true, and prints `x` if at least
-  one value in the sequence is false.
+  (evaluated in the scope of `x`) becomes true. If `y` is a literal,
+  stops as soon as `x` value becomes equal to `y`. If `y` is a
+  sequence of values, stops when at least one value in the sequence is
+  true, and prints `x` if at least one value in the sequence is false.
 * `(cast)x`, `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `&&/x`, `||/x` -
   first six are conventional unary C operators, the last three are
   *grouping* operators.  The first one counts the numbers of values of

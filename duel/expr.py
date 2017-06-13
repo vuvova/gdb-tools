@@ -149,18 +149,20 @@ class TakeNth(BinaryBase):
 
 class Until(BinaryBase):
     name_ = '{}@{}'
-    @underscored
+    @scoped
     def eval(self):
         if isinstance(self.arg2_, Literal): f = lambda x,y: x == y
         else: f= lambda x,y: y
         for n1,v1 in self.arg1_.eval():
             underscores.append(v1)
+            scopes.append(v1)
             stop, output = False, False
             for n2,v2 in self.arg2_.eval():
                 if f(v1, v2): stop = True
                 else: output = True
                 if stop and output: break
             if output: yield n1, v1
+            scopes.pop()
             underscores.pop()
             if stop: break
 

@@ -83,7 +83,7 @@ dl foo && 0
 dl foo || 0
 dl tree->left->left->left->v || 0
 dl tree-->right->v @ (v <= 11)
-dl tree-->right->v @ (v <= 11, 0)
+dl tree-->right @ (v <= 11, 0)
 dl 1..5
 dl 'x'..'z'
 dl ..3
