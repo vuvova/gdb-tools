@@ -3,10 +3,19 @@
 This repository contains various tools used to make the time spent in gdb more
 comfortable.
 
+To install these tools, you need to import corresponding modules into your gdb.
 I'd recommend to put all your python gdb enhancements in `~/.gdb.py` and source
 it from `~/.gdbinit` like
 
     source /path/to/.gdb.py
+
+And your `.gdb.py` could have, for example
+```python
+from sys import path
+path.append('/path/to/gdb-tools')
+import duel
+from pretty_printer import PrettyPrinter
+```
 
 ## pretty_printer.py
 
