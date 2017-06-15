@@ -1,5 +1,5 @@
-GNU gdb (Gentoo 7.10.1 vanilla) 7.10.1
-Copyright (C) 2015 Free Software Foundation, Inc.
+GNU gdb (Gentoo 7.12.1 vanilla) 7.12.1
+Copyright (C) 2017 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
@@ -100,7 +100,7 @@ Attempt to take contents of a non-pointer value.
 foo + 1 = 2
 ~5 = -6
 ~0xFF77 = -65400
-10 * 3.14 = 31.399999999999999
+10 * 3.14 = 31.400000000000002
 arr[foo] / 3.1415000000000002 = 3.1831927423205473
 st.i % 10 = 3
 1 + 2 = 3
