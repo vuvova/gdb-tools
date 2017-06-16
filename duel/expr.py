@@ -192,7 +192,7 @@ class Count(UnaryBase):
     def eval(self):
         i = 0
         for n,v in self.arg1_.eval(): i +=  1
-        yield self.name(), i
+        yield self.name(), gdb.Value(i)
 
 class LazyGrouping(UnaryBase):
     def __init__(self, n, a, v0, v):
