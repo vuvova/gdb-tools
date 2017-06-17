@@ -156,6 +156,22 @@ when operators are applied, e.g., `(1,1.0)/2` returns 0 (int) and 0.5
 (double); `(x,y).z` returns `x.z` and `y.z` even if `x` and `y` are of
 different types, as long as they both have a field `z`.
 
+Commands
+---------
+
+Command        | Description
+-------------- | -------------
+`duel`         | prints the list of commands
+`dl`           | alias for `duel`
+`dl help`      | prints short help
+`dl ?`         | alias for `dl help`
+`dl longhelp`  | prints this help file
+`dl ??`        | alias for `dl longhelp`
+`dl examples`  | prints **Examples** section of this file
+`dl operators` | prints **Operators** section of this file
+`dl aliases`   | prints the list of aliases, see `x:=y` operator below
+`dl clear`     | clears the list of aliases
+
 Operators
 ---------
 
