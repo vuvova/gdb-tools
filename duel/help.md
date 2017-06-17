@@ -165,9 +165,9 @@ called normally and work as expected.
 The complete list of operators, in the precedence order:
 
 * `(x)`, `{x}` - curly braces work as parentheses, but print the value
-  of `x`, not its symbolic representation
+  of `x`, not its symbolic representation.
 * `x#y` - for every value of `x`, set `y` to the index of this `x`
-  value (0, 1, ...)
+  value (0, 1, ...).
 * `x.y`, `x->y`, `x-->y`, `x[y]`, `x[[y]]`, `x@y` - the first two
   operators are *scope* operators, they evaluate `y` in the scope of
   `x`. The third one walks the linked list, evaluating `x`, `x->y`,
@@ -183,27 +183,27 @@ The complete list of operators, in the precedence order:
   *grouping* operators.  The first one counts the numbers of values of
   `x`, second returns a boolean AND of all values of `x`, third —
   boolean OR. Just like in C, AND and OR operators are lazy and stop
-  as soon as the result value is known
-* `x/y`, `x*y`, `x%y` - conventional C operators
-* `x-y`, `x+y` - conventional C operators
-* `x<<y`, `x>>y` - conventional C operators
+  as soon as the result value is known.
+* `x/y`, `x*y`, `x%y` - conventional C operators.
+* `x-y`, `x+y` - conventional C operators.
+* `x<<y`, `x>>y` - conventional C operators.
 * `x..y`, `..x`, `x..` - ranges. First returns integers from `x` to
   `y`, inclusive (`x` can be greater than `y`, for counting
   backwards). Second returns first `x` integers starting from 0 (in
   other words, it works like `0..x-1`). Last returns an unlimited list
-  of integers starting from `x`, and is normally used with `x@y`
+  of integers starting from `x`, and is normally used with `x@y`.
 * `x<=y`, `x>=y`, `x<y`, `x>y`, `x<=?y`, `x>=?y`, `x<?y`, `x>?y` -
   first four are conventional C operators, the second four return `x`
   if the condition is true, otherwise they return nothing (so, they
-  work like a filter of the `x` value sequence)
+  work like a filter of the `x` value sequence).
 * `x==y`, `x!=y`, `x==?y`, `x!=?y` - same. First two are conventional
   C operators, the other two are filters.
-* `x&y` - conventional C operator
-* `x^y` - conventional C operator
-* `x|y` - conventional C operator
-* `x&&y` - conventional C operator
-* `x||y` - conventional C operator
-* `x?y:z` - conventional C operator
+* `x&y` - conventional C operator.
+* `x^y` - conventional C operator.
+* `x|y` - conventional C operator.
+* `x&&y` - conventional C operator.
+* `x||y` - conventional C operator.
+* `x?y:z` - conventional C operator.
 * `x:=y` - create an alias `x` for the value of `y`. Note, that it is
   an *alias* to `y`, not a copy of `y` value. If `y` value changes,
   the value of the alias will change too.  Use `dl aliases` and `dl
@@ -214,6 +214,7 @@ The complete list of operators, in the precedence order:
   In the first form it's equivalent to `x?y:z`, in the second form it
   has a filter semantics, returning `y` for every non-zero `x`
   (equivalent to `x !=? 0 => y`).
+* `x;y` - evaluate x, ignoring all the results, then evaluate y.
 
 Examples
 --------
@@ -339,7 +340,6 @@ Duel.py yet:
 * Builtins: `frame()`, `sizeof()`, `frames_no`, `func.x`
 * Variables: `int i; i=5; i++`
 * Assignments: `x[..10]=0`
-* `x;y` operator
 * `while` and `for` operators
 
 Features that were not in the original Duel:

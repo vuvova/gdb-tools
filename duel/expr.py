@@ -237,13 +237,21 @@ class Enumerate(BinaryBase):
             yield nv1
 
 class List(Expr):
-    def __init__(self, args):
-        self.args_ = args
+    def __init__(self, args): self.args_ = args
     def name(self): return ','.join([e.name() for e in self.args_])
     def eval(self):
         for v in self.args_:
             for n2,v2 in v.eval():
                 yield n2, v2
+
+class Statement(Expr):
+    def __init__(self, args): self.args_ = args
+    def name(self): return '; '.join([e.name() for e in self.args_])
+    def eval(self):
+        for v in self.args_[:-1]:
+            for n2,v2 in v.eval(): pass
+        for n2,v2 in self.args_[-1].eval():
+            yield n2, v2
 
 class Foreach(BinaryBase):
     name_ = '{} => {}'

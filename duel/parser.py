@@ -292,7 +292,7 @@ class DuelVisitor(PTNodeVisitor):
         not_implemented()
     def visit_term0(self, node, ch):
         if len(ch) == 1: return ch[0]
-        not_implemented()
+        return expr.Statement(ch[::2])
 
 def eval(arg):
     parse_tree=parser.parse(arg)

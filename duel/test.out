@@ -265,6 +265,8 @@ tree-->right[[3]]->(if(v % 2) v * v) = 49
 (100.. => if(&&/(2,3..(_ - 1) => __ % _)) _)[[4]] = 113
 (int)3.5 = 3
 (int)3.5 * 10 = 30
+x + 7 = 11
+#/(1..4; x := 5; x + 6) = 1
 Temporary breakpoint 1 at 0x4004ba: file test.c, line 15.
 
 Temporary breakpoint 1, main () at test.c:15
