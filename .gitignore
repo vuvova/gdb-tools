@@ -3,3 +3,5 @@
 .gdb_history
 a.out
 test.reject
+/build
+/tags

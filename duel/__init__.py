@@ -2,9 +2,8 @@ import gdb
 import sys
 import traceback
 
-from help import *
-import parser
-import expr
+from duel.help import *
+from duel import parser, expr
 
 class duel (gdb.Command):
     """Evaluate Duel expressions. Duel is a high level data exploration language"""

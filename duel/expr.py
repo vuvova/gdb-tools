@@ -143,7 +143,7 @@ class TakeNth(BinaryBase):
     def eval(self):
         for n2,v2 in self.arg2_.eval():
             val = self.arg1_.eval()
-            for i in xrange(0,v2): next(val)
+            for i in range(0,v2): next(val)
             n1, v1 = next(val)
             yield self.name_.format(self.arg1_.name(), n2), v1
 
@@ -172,7 +172,7 @@ class URange(UnaryBase):
         self.name_, self.to = n, to
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            for i in xrange(0 if self.to else v1, v1 if self.to else sys.maxint):
+            for i in range(0 if self.to else v1, v1 if self.to else sys.maxint):
                 v = gdb.Value(i).cast(v1.type)
                 yield val2str(v), v
 
@@ -182,7 +182,7 @@ class BiRange(BinaryBase):
         for n1,v1 in self.arg1_.eval():
             for n2,v2 in self.arg2_.eval():
                 step = 1 if v1 < v2 else -1
-                for i in xrange(v1, v2 + step, step):
+                for i in range(v1, v2 + step, step):
                     v = gdb.Value(i).cast(v1.type)
                     yield val2str(v), v
 
