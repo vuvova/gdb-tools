@@ -11,7 +11,7 @@ or
 
     python setup.py install --user
 
-or with `easy_install` or `pip`.
+or with `easy_install` or `pip install gdb-tools`.
 
 Then you need to import corresponding modules into your gdb. Add, for example,
 
