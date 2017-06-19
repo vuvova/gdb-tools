@@ -2,9 +2,8 @@ import gdb
 import sys
 import traceback
 
-from help import *
-import parser
-import expr
+from duel.help import *
+from duel import parser, expr
 
 class duel (gdb.Command):
     """Evaluate Duel expressions. Duel is a high level data exploration language"""
@@ -40,7 +39,7 @@ class duel (gdb.Command):
         elif arg in [ 'aliases' ]:
             if len(expr.aliases) > 0:
                 gdb.write("Aliases table:\n")
-                for k in sorted(expr.aliases.iterkeys()):
+                for k in sorted(expr.aliases.keys()):
                     n,v=expr.aliases[k]
                     gdb.write("{}: {} = {}\n".format(k, n, expr.val2str(v)))
             else:

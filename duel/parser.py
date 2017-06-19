@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
 from arpeggio import ZeroOrMore, Optional, EOF, RegExMatch, Match, Terminal, \
                      ParserPython, PTNodeVisitor, visit_parse_tree, OneOrMore
-import gdb
-import expr
 import re
+import gdb
+from duel import expr
+
+try: a=unichr # Python 3 compatibility
+except: unichr=chr
 
 escapes=r"""\\(?:[abefnrtv"'?]|[0-7]{1,3}|x[0-9a-fA-F]+|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})"""
 

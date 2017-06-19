@@ -1,6 +1,9 @@
 import gdb
 import sys
 
+try: a=xrange # Python 3 compatibility
+except: xrange=range
+
 aliases = dict()
 scopes = list()
 underscores = list()
@@ -172,7 +175,7 @@ class URange(UnaryBase):
         self.name_, self.to = n, to
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            for i in xrange(0 if self.to else v1, v1 if self.to else sys.maxint):
+            for i in xrange(0 if self.to else v1, v1 if self.to else sys.maxsize):
                 v = gdb.Value(i).cast(v1.type)
                 yield val2str(v), v
 
