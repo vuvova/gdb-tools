@@ -3,25 +3,31 @@
 This repository contains various tools used to make the time spent in gdb more
 comfortable.
 
-To install these tools, you need to import corresponding modules into your gdb.
-I'd recommend to put all your python gdb enhancements in `~/.gdb.py` and source
-it from `~/.gdbinit` like
+To install these tools, first install the modules with
 
-    source /path/to/.gdb.py
+    sudo python setup.py install
 
-And your `.gdb.py` could have, for example
-```python
-from sys import path
-path.append('/path/to/gdb-tools')
-import duel
-from pretty_printer import PrettyPrinter
-```
+or
+
+    python setup.py install --user
+
+or with `easy_install` or `pip`.
+
+Then you need to import corresponding modules into your gdb. Add, for example,
+
+    py import duel
+
+into your `~/.gdb.py`. If you plan to use `pretty_printer` module, I'd
+recommend to put all your python gdb enhancements in `~/.gdb.py` and source it
+from `~/.gdbinit`.
 
 ## pretty_printer.py
 
 A convenience helper to write **gdb pretty-printers**. Import this module and
 write new pretty printers as easy as
 ```python
+from pretty_printer import PrettyPrinter
+
 @PrettyPrinter
 def st_bitmap(val):
     s=''

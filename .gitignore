@@ -3,3 +3,8 @@
 .gdb_history
 a.out
 test.reject
+MANIFEST
+dist/
+build/
+gdb_tools.egg-info/
+setup.cfg
