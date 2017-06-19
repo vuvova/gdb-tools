@@ -1,5 +1,6 @@
 import gdb
 import sys
+import six
 
 aliases = dict()
 scopes = list()
@@ -42,7 +43,7 @@ class Ident(Expr):
         if self.scope: return scopes[self.scope][self.name_]
         if self.sym: return self.symval(self.sym)
         if self.name_ in aliases: return aliases[self.name_][1]
-        for self.scope in range(len(scopes)-1,-1,-1):
+        for self.scope in six.range(len(scopes)-1,-1,-1):
             try: return scopes[self.scope][self.name_]
             except gdb.error: self.scope = None
         try: self.sym = gdb.lookup_symbol(self.name_)[0]
@@ -143,7 +144,7 @@ class TakeNth(BinaryBase):
     def eval(self):
         for n2,v2 in self.arg2_.eval():
             val = self.arg1_.eval()
-            for i in range(0,v2): next(val)
+            for i in six.range(0,v2): next(val)
             n1, v1 = next(val)
             yield self.name_.format(self.arg1_.name(), n2), v1
 
@@ -172,7 +173,7 @@ class URange(UnaryBase):
         self.name_, self.to = n, to
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            for i in range(0 if self.to else v1, v1 if self.to else sys.maxint):
+            for i in six.range(0 if self.to else v1, v1 if self.to else sys.maxint):
                 v = gdb.Value(i).cast(v1.type)
                 yield val2str(v), v
 
@@ -182,7 +183,7 @@ class BiRange(BinaryBase):
         for n1,v1 in self.arg1_.eval():
             for n2,v2 in self.arg2_.eval():
                 step = 1 if v1 < v2 else -1
-                for i in range(v1, v2 + step, step):
+                for i in six.range(v1, v2 + step, step):
                     v = gdb.Value(i).cast(v1.type)
                     yield val2str(v), v
 
