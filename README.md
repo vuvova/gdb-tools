@@ -14,7 +14,7 @@ And your `.gdb.py` could have, for example
 from sys import path
 path.append('/path/to/gdb-tools')
 import duel
-import gdb_pretty
+from gdb_pretty import PrettyPrinter
 ```
 
 Or you can install the packages to system directory:
