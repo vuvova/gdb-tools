@@ -1,4 +1,5 @@
 import re
+import os
 
 HEADER = 'DUEL.py 0.9.3, high level data exploration language. "dl" for help\n'
 
@@ -12,7 +13,8 @@ duel aliases   - show current aliases
 duel clear     - clear all aliases
 """
 
-with open(__file__.rstrip("pyc") + "md") as f: LONGHELP = ''.join(f)
+with open(os.path.join(os.path.dirname(__file__), "help.md")) as f:
+	LONGHELP = ''.join(f)
 
 HELP = """\
 Duel - Debugging U (might) Even Like -- A high level data exploration language
