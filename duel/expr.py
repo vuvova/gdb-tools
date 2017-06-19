@@ -173,7 +173,7 @@ class URange(UnaryBase):
         self.name_, self.to = n, to
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            for i in six.range(0 if self.to else v1, v1 if self.to else sys.maxint):
+            for i in six.range(0 if self.to else v1, v1 if self.to else six.MAXSIZE):
                 v = gdb.Value(i).cast(v1.type)
                 yield val2str(v), v
 

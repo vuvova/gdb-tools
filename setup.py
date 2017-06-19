@@ -11,5 +11,5 @@ setup(
     keywords=['gdb', 'duel'],
     classifiers=[],
 	package_data={'': ['help.md']},
-	install_requires=['arpeggio'],
+	install_requires=['arpeggio', 'six'],
 )
