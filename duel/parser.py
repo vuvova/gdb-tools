@@ -41,7 +41,7 @@ def make_typespec_parser():
             return Terminal(self, c_pos, t)
         else:
             if parser.debug:
-                parser.dprint("-- NoMatch at {}".format(c_pos))
+                parser.dprint("-- NoMatch at {0}".format(c_pos))
             parser._nm_raise(self, c_pos, parser)
     self.to_match=self.rule_name
     self._parse = parse
@@ -147,7 +147,7 @@ class DuelVisitor(PTNodeVisitor):
         return expr.Call(ch[0], expr.List([ch[2]]))
     def visit_parens(self, node, ch):
         op, arg = ch[0], ch[1]
-        if op == '(': return expr.Unary('({})', arg, lambda x: x)
+        if op == '(': return expr.Unary('({0})', arg, lambda x: x)
         if op == '{': return expr.Curlies(arg)
     def visit_term19a(self, node, ch):
         if len(ch) == 1: return ch[0]
@@ -156,9 +156,9 @@ class DuelVisitor(PTNodeVisitor):
         l = ch.pop(0)
         while len(ch):
             op, r = ch.pop(0), ch.pop(0)
-            if   op == '[':   l, _ = expr.Binary(l, '{}[{}]', r, lambda x,y: x[int(y)]), ch.pop(0)
-            elif op == '.':   l    = expr.Struct(l, '{}.{}', r)
-            elif op == '->':  l    = expr.Struct(l, '{}->{}', r)
+            if   op == '[':   l, _ = expr.Binary(l, '{0}[{1}]', r, lambda x,y: x[int(y)]), ch.pop(0)
+            elif op == '.':   l    = expr.Struct(l, '{0}.{1}', r)
+            elif op == '->':  l    = expr.Struct(l, '{0}->{1}', r)
             elif op == '-->': l    = expr.StructWalk(l, r)
             elif op == '[[':  l, _ = expr.TakeNth(l, r), ch.pop(0)
             elif op == '@':   l    = expr.Until(l, r)
@@ -205,8 +205,8 @@ class DuelVisitor(PTNodeVisitor):
     def visit_term14(self, node, ch):
         if len(ch) == 1: return ch[0]
         if len(ch) == 3: return expr.BiRange(ch[0], ch[2])
-        if ch[0] == '..': return expr.URange('..{}', ch[1], True)
-        return expr.URange('{}..', ch[0], False)
+        if ch[0] == '..': return expr.URange('..{0}', ch[1], True)
+        return expr.URange('{0}..', ch[0], False)
     def visit_term13(self, node, ch):
         l = ch.pop(0)
         while len(ch):
@@ -261,7 +261,7 @@ class DuelVisitor(PTNodeVisitor):
         return l
     def visit_term6(self, node, ch):
         if len(ch) == 1: return ch[0]
-        return expr.Ternary('{} ? {} : {}', ch[0], ch[2], ch[4])
+        return expr.Ternary('{0} ? {1} : {2}', ch[0], ch[2], ch[4])
     def visit_term5(self, node, ch):
         l = ch.pop(0)
         while len(ch):
@@ -286,8 +286,8 @@ class DuelVisitor(PTNodeVisitor):
         return l
     def visit_ifterm(self, node, ch):
         if len(ch) == 1: return ch[0]
-        if len(ch) == 5: return expr.Ternary('if({}) {}', ch[2], ch[4], None)
-        return expr.Ternary('if({}) {} else {}', ch[2], ch[4], ch[6])
+        if len(ch) == 5: return expr.Ternary('if({0}) {1}', ch[2], ch[4], None)
+        return expr.Ternary('if({0}) {1} else {2}', ch[2], ch[4], ch[6])
     def visit_whileterm(self, node, ch):
         if len(ch) == 1: return ch[0]
         not_implemented()
@@ -313,4 +313,4 @@ def eval(arg):
     assert len(expr.underscores) == 0
 
     for name, val in expr_tree.eval():
-        gdb.write('{} = {}\n'.format(name, expr.val2str(val)))
+        gdb.write('{0} = {1}\n'.format(name, expr.val2str(val)))

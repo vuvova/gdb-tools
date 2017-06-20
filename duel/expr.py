@@ -69,11 +69,11 @@ class UnaryBase(Expr):
 class Unary(UnaryBase):
     def __init__(self, n, a, v):
         super (Unary, self).__init__ (a)
-        self.name_ = n if '{' in n else n + '{}'
+        self.name_ = n if '{' in n else n + '{0}'
         self.value = v
 
 class Curlies(UnaryBase):
-    name_ = "({})"
+    name_ = "({0})"
     def eval(self):
         for n,v in self.arg1_.eval():
             yield val2str(v), v
@@ -89,7 +89,7 @@ class BinaryBase(Expr):
 class Binary(BinaryBase):
     def __init__(self, a1, n, a2, v):
         super (Binary, self).__init__ (a1, a2)
-        self.name_ = n if '{' in n else '{} ' + n + ' {}'
+        self.name_ = n if '{' in n else '{0} ' + n + ' {1}'
         self.value = v
 
 class Filter(Binary):
@@ -114,15 +114,15 @@ class Struct(BinaryBase):
             underscores.pop()
 
 class StructWalk(BinaryBase):
-    name_ = '{}-->{}'
+    name_ = '{0}-->{1}'
     def path2str(self, path):
         if len(path) == 1: return path[0]
         s, prev, cnt = path[0], path[1], 1
         for m in path[2:] + [None]:
             if m == prev: cnt += 1
             else:
-                if cnt == 1: s += '->{}'.format(prev)
-                else: s += '-->{}[[{}]]'.format(prev, cnt)
+                if cnt == 1: s += '->{0}'.format(prev)
+                else: s += '-->{0}[[{1}]]'.format(prev, cnt)
                 prev, cnt = m, 1
         return s
     @scoped
@@ -142,7 +142,7 @@ class StructWalk(BinaryBase):
                 underscores.pop()
 
 class TakeNth(BinaryBase):
-    name_ = '{}[[{}]]'
+    name_ = '{0}[[{1}]]'
     def eval(self):
         for n2,v2 in self.arg2_.eval():
             val = self.arg1_.eval()
@@ -151,7 +151,7 @@ class TakeNth(BinaryBase):
             yield self.name_.format(self.arg1_.name(), n2), v1
 
 class Until(BinaryBase):
-    name_ = '{}@{}'
+    name_ = '{0}@{1}'
     @scoped
     def eval(self):
         if isinstance(self.arg2_, Literal): f = lambda x,y: x == y
@@ -180,7 +180,7 @@ class URange(UnaryBase):
                 yield val2str(v), v
 
 class BiRange(BinaryBase):
-    name_ = '{}..{}'
+    name_ = '{0}..{1}'
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             for n2,v2 in self.arg2_.eval():
@@ -192,7 +192,7 @@ class BiRange(BinaryBase):
 class EagerGrouping(UnaryBase):
     def __init__(self, n, a, v):
         super (EagerGrouping, self).__init__ (a)
-        self.name_, self.add = n + '{}', v
+        self.name_, self.add = n + '{0}', v
     def eval(self):
         i = 0
         for n,v in self.arg1_.eval(): i =  self.add(i, v)
@@ -201,7 +201,7 @@ class EagerGrouping(UnaryBase):
 class LazyGrouping(UnaryBase):
     def __init__(self, n, a, v0, v):
         super (LazyGrouping, self).__init__ (a)
-        self.name_, self.init_val, self.add = n + '{}', v0, v
+        self.name_, self.init_val, self.add = n + '{0}', v0, v
     def eval(self):
         i = self.init_val
         for n,v in self.arg1_.eval():
@@ -225,7 +225,7 @@ class Ternary(Expr):
                     if v1: yield self.name_.format(n1, n2), v2
 
 class Alias(BinaryBase):
-    name_ = '{} := {}'
+    name_ = '{0} := {1}'
     def eval(self):
         for n2,v2 in self.arg2_.eval():
             try: v2 = v2.reference_value()
@@ -234,7 +234,7 @@ class Alias(BinaryBase):
             yield self.arg1_.name(), v2
 
 class Enumerate(BinaryBase):
-    name_ = '{}#{}'
+    name_ = '{0}#{1}'
     def eval(self):
         for i, nv1 in enumerate(self.arg1_.eval()):
             aliases[self.arg2_.name()] = (str(i), i)
@@ -258,7 +258,7 @@ class Statement(Expr):
             yield n2, v2
 
 class Foreach(BinaryBase):
-    name_ = '{} => {}'
+    name_ = '{0} => {1}'
     @underscored
     def eval(self):
         for n1,v1 in self.arg1_.eval():
@@ -268,7 +268,7 @@ class Foreach(BinaryBase):
             underscores.pop()
 
 class Call(BinaryBase):
-    name_ = '{}({})'
+    name_ = '{0}({1})'
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             args = self.arg2_.args_
