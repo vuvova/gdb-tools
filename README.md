@@ -17,7 +17,7 @@ Then you need to import corresponding modules into your gdb. Add, for example,
 
     py import duel
 
-into your `~/.gdb.py`. If you plan to use `pretty_printer` module, I'd
+into your `~/.gdbinit`. If you plan to use `pretty_printer` module, I'd
 recommend to put all your python gdb enhancements in `~/.gdb.py` and source it
 from `~/.gdbinit`.
 
