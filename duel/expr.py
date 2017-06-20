@@ -2,7 +2,8 @@ import gdb
 import sys
 
 try: a=xrange # Python 3 compatibility
-except: xrange=range
+except:
+    def xrange(f,t,s=1): return range(int(f),int(t),s)
 
 aliases = dict()
 scopes = list()
