@@ -19,7 +19,7 @@ class duel (gdb.Command):
         self.invoke(arg, from_tty)
 
     def init (self):
-        gdb.write(HEADER, gdb.STDERR)
+        gdb.write(HEADER)
         duel.invoke = self.do_command
 
     def do_command(self, arg, from_tty):

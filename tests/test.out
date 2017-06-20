@@ -1,17 +1,4 @@
-GNU gdb (Gentoo 7.12.1 vanilla) 7.12.1
-Copyright (C) 2017 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-pc-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<https://bugs.gentoo.org/>.
-Find the GDB manual and other documentation resources online at:
-<http://www.gnu.org/software/gdb/documentation/>.
-For help, type "help".
-Type "apropos word" to search for commands related to "word".
+DUEL.py 0.9.3, high level data exploration language. "dl" for help
 Duel - Debugging U (might) Even Like -- A high level data exploration language
 
 Duel was designed to overcome problems with traditional debuggers' print
@@ -42,7 +29,7 @@ Try "dl operators" or "dl longhelp"
 Expected 'if' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
 foo = 1
 bar = 2
-s = 0x400544 "s1"
+s = 0xXXXXX "s1"
 'a' = 97 'a'
 '\r' = 13 '\r'
 '\x20' = 32 ' '
@@ -116,9 +103,9 @@ foo || 0 = 1
 tree->left->left->left->v || 0 = 0
 tree->v = 14
 tree->right->v = 13
-tree = 0x601240 <te>
-tree->right = 0x601220 <td>
-tree-->right[[2]] = 0x6011e0 <tb>
+tree = 0xXXXXX <te>
+tree->right = 0xXXXXX <td>
+tree-->right[[2]] = 0xXXXXX <tb>
 1 = 1
 2 = 2
 3 = 3
@@ -184,15 +171,15 @@ arr[i] + i = 11
 arr[i] + 0 = 5
 arr[i] + 1 = 11
 x = "string"
-y = 0x601040 <foo>
+y = 0xXXXXX <foo>
 *y = 1
 z = 1
-&z = 0x601040 <foo>
+&z = 0xXXXXX <foo>
 Not addressable
 Aliases table:
 i: 1 = 1
 x: "string" = "string"
-y: &foo = 0x601040 <foo>
+y: &foo = 0xXXXXX <foo>
 z: foo = 1
 Aliases table cleared
 Aliases table empty
@@ -267,7 +254,6 @@ tree-->right[[3]]->(if(v % 2) v * v) = 49
 (int)3.5 * 10 = 30
 x + 7 = 11
 #/(1..4; x := 5; x + 6) = 1
-Temporary breakpoint 1 at 0x4004ba: file test.c, line 15.
 
 Temporary breakpoint 1, main () at test.c:15
 15	  return 0;
