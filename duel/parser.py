@@ -71,7 +71,7 @@ def term19(): return term19a, ZeroOrMore([
             ('[', expression, ']'),
             ('[[', expression, ']]'),
         ])
-def term18(): return ZeroOrMore(['&&/', '||/', '#/', '-', '*', '&', '!', '~', cast]), term19,
+def term18(): return ZeroOrMore(['&&/', '||/', '#/', '+/', '-', '*', '&', '!', '~', cast]), term19,
 def term17(): return term18, ZeroOrMore(['/', '*', '%'], term18)
 def term16(): return term17, ZeroOrMore(['-', '+'], term17)
 def term15(): return term16, ZeroOrMore(['<<', '>>'], term16)
@@ -167,7 +167,8 @@ class DuelVisitor(PTNodeVisitor):
         r = ch.pop()
         while (len(ch)):
             op = ch.pop()
-            if   op == '#/':  r = expr.Count(r)
+            if   op == '#/':  r = expr.EagerGrouping(op, r,  lambda i, x: i + 1)
+            elif op == '+/':  r = expr.EagerGrouping(op, r,  lambda i, x: i + x)
             elif op == '&&/': r = expr.LazyGrouping(op, r, 1, lambda i, x: 1 if i and x else 0)
             elif op == '||/': r = expr.LazyGrouping(op, r, 0, lambda i, x: 1 if i or x else 0)
             elif op == '-':   r = expr.Unary(op, r, lambda x: -x)

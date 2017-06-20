@@ -189,12 +189,13 @@ class BiRange(BinaryBase):
                     v = gdb.Value(i).cast(v1.type)
                     yield val2str(v), v
 
-class Count(UnaryBase):
-    name_ = '#/{}'
-    def __init__(self, a): super (Count, self).__init__ (a)
+class EagerGrouping(UnaryBase):
+    def __init__(self, n, a, v):
+        super (EagerGrouping, self).__init__ (a)
+        self.name_, self.add = n + '{}', v
     def eval(self):
         i = 0
-        for n,v in self.arg1_.eval(): i +=  1
+        for n,v in self.arg1_.eval(): i =  self.add(i, v)
         yield self.name(), gdb.Value(i)
 
 class LazyGrouping(UnaryBase):

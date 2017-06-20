@@ -194,12 +194,12 @@ The complete list of operators, in the precedence order:
   stops as soon as `x` value becomes equal to `y`. If `y` is a
   sequence of values, stops when at least one value in the sequence is
   true, and prints `x` if at least one value in the sequence is false.
-* `(cast)x`, `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `&&/x`, `||/x` -
-  first six are conventional unary C operators, the last three are
+* `(cast)x`, `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `+/x`, `&&/x`, `||/x` -
+  first six are conventional unary C operators, the last four are
   *grouping* operators.  The first one counts the numbers of values of
-  `x`, second returns a boolean AND of all values of `x`, third —
-  boolean OR. Just like in C, AND and OR operators are lazy and stop
-  as soon as the result value is known.
+  `x`, the second sums them, the third returns a boolean AND of all
+  values of `x`, the fourth — boolean OR. Just like in C, AND and OR
+  operators are lazy and stop as soon as the result value is known.
 * `x/y`, `x*y`, `x%y` - conventional C operators.
 * `x-y`, `x+y` - conventional C operators.
 * `x<<y`, `x>>y` - conventional C operators.

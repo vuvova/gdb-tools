@@ -1,4 +1,4 @@
-DUEL.py 0.9.3, high level data exploration language. "dl" for help
+DUEL.py 0.9.4, high level data exploration language. "dl" for help
 Duel - Debugging U (might) Even Like -- A high level data exploration language
 
 Duel was designed to overcome problems with traditional debuggers' print
@@ -26,7 +26,7 @@ Try "dl operators" or "dl longhelp"
 2.0e1 = 20
 020 = 16
 0x20 = 32
-Expected 'if' or ident or '&&/' or '||/' or '#/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
+Expected 'if' or ident or '&&/' or '||/' or '#/' or '+/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
 foo = 1
 bar = 2
 s = 0xXXXXX "s1"
@@ -74,6 +74,7 @@ Attempt to take contents of a non-pointer value.
 #/tree-->left = 4
 #/arr[..2] = 2
 #/(arr[..2] <? 7) = 1
++/(arr[..2] <? 7) = 5
 &&/foo = 1
 &&/tree-->left->v = 0
 ||/arr[..2] = 1
@@ -198,6 +199,7 @@ arr[1] = 10
 2 = 2
 3 = 3
 #/(1,4,8,16) = 4
++/(1,4,8,16) = 29
 arr[0] = 5
 arr[1] = 10
 1 = 1

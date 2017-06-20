@@ -53,6 +53,7 @@ dl #/{foo}
 dl #/tree-->left
 dl #/arr[..2]
 dl #/(arr[..2] <? 7)
+dl +/(arr[..2] <? 7)
 dl &&/foo
 dl &&/tree-->left->v
 dl ||/arr[..2]
@@ -124,6 +125,7 @@ dl ..2 => arr[_]
 dl 1..3 => .._ => __ + _
 dl 1,2,3
 dl #/(1,4,8,16)
+dl +/(1,4,8,16)
 dl arr[0,1]
 dl 1..3,2..4,3..5
 dl st.(i,r)
