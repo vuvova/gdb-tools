@@ -206,7 +206,7 @@ class LazyGrouping(UnaryBase):
         for n,v in self.arg1_.eval():
             i = self.add(i, v)
             if i != self.init_val: break
-        yield self.name(), i
+        yield self.name(), gdb.Value(i)
 
 class Ternary(Expr):
     def __init__(self, n, a1, a2, a3):
