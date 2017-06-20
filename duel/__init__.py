@@ -41,7 +41,7 @@ class duel (gdb.Command):
                 gdb.write("Aliases table:\n")
                 for k in sorted(expr.aliases.keys()):
                     n,v=expr.aliases[k]
-                    gdb.write("{}: {} = {}\n".format(k, n, expr.val2str(v)))
+                    gdb.write("{0}: {1} = {2}\n".format(k, n, expr.val2str(v)))
             else:
                 gdb.write("Aliases table empty\n")
         elif arg == 'clear':
