@@ -262,3 +262,5 @@ Temporary breakpoint 1, main () at test.c:15
 strncmp("foo","bar",1) = 4
 strncmp("foo","bar",2) = 4
 strncmp("foo","bar",3) = 4
+(strcmp)("FOO","foo") = -32
+(strcasecmp)("FOO","foo") = 0

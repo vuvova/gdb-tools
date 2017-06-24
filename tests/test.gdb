@@ -140,3 +140,4 @@ dl 1..2;3;x:=4;5;6;x+7
 dl #/(1..4;x:=5;x+6)
 start
 dl strncmp("foo", "bar", 1..3)
+dl (strcmp, strcasecmp)("FOO", "foo")

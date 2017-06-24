@@ -57,21 +57,18 @@ def char(): return RegExMatch(r"'([^'\\]|"+escapes+")'")
 def string(): return RegExMatch(r'"([^\\"]|'+escapes+')*"')
 def ident(): return RegExMatch(r'[A-Za-z_]\w*')
 def underscores(): return RegExMatch(r'_+')
-def ident_or_func(): return ident, Optional('(', Optional(expression), ')')
 def parens(): return [('(', expression, ')'), ('{', expression, '}')]
 def term21(): return [real, hexadecimal, decimal, octal, char, string,
-                      underscores, ident_or_func ]
-def term20(): return [
-            term21,
-            parens
-        ]
+                      underscores, ident]
+def term20(): return [ term21, parens ]
 def term19a(): return term20, Optional('#', ident)
 def term19(): return term19a, ZeroOrMore([
             (['.', '->', '-->', '@'], term19a),
             ('[', expression, ']'),
             ('[[', expression, ']]'),
         ])
-def term18(): return ZeroOrMore(['&&/', '||/', '#/', '+/', '-', '*', '&', '!', '~', cast]), term19,
+def term18a(): return term19, ZeroOrMore('(', Optional(expression), ')')
+def term18(): return ZeroOrMore(['&&/', '||/', '#/', '+/', '-', '*', '&', '!', '~', cast]), term18a,
 def term17(): return term18, ZeroOrMore(['/', '*', '%'], term18)
 def term16(): return term17, ZeroOrMore(['-', '+'], term17)
 def term15(): return term16, ZeroOrMore(['<<', '>>'], term16)
@@ -140,11 +137,6 @@ class DuelVisitor(PTNodeVisitor):
         return expr.Ident(node.value)
     def visit_underscores(self, node, ch):
         return expr.Underscore(node.value)
-    def visit_ident_or_func(self, node, ch):
-        if len(ch) == 1: return ch[0]
-        if len(ch) == 3: return expr.Call(ch[0], expr.List([]))
-        if isinstance(ch[2], expr.List): return expr.Call(ch[0], ch[2])
-        return expr.Call(ch[0], expr.List([ch[2]]))
     def visit_parens(self, node, ch):
         op, arg = ch[0], ch[1]
         if op == '(': return expr.Unary('({0})', arg, lambda x: x)
@@ -162,6 +154,17 @@ class DuelVisitor(PTNodeVisitor):
             elif op == '-->': l    = expr.StructWalk(l, r)
             elif op == '[[':  l, _ = expr.TakeNth(l, r), ch.pop(0)
             elif op == '@':   l    = expr.Until(l, r)
+        return l
+    def visit_term18a(self, node, ch):
+        l = ch.pop(0)
+        while len(ch):
+            ch.pop(0) # '('
+            r = ch.pop(0)
+            if r == ')': r = expr.List([])
+            else:
+                ch.pop(0) # ')'
+                if not isinstance(r, expr.List): r = expr.List([r])
+            l = expr.Call(l, r)
         return l
     def visit_term18(self, node, ch):
         r = ch.pop()
