@@ -139,7 +139,7 @@ class DuelVisitor(PTNodeVisitor):
         return expr.Underscore(node.value)
     def visit_parens(self, node, ch):
         op, arg = ch[0], ch[1]
-        if op == '(': return expr.Unary('({0})', arg, lambda x: x)
+        if op == '(': return expr.Parens(arg)
         if op == '{': return expr.Curlies(arg)
     def visit_term19a(self, node, ch):
         if len(ch) == 1: return ch[0]

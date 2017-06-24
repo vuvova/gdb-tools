@@ -35,12 +35,15 @@ class Expr(object):
     def name(self): return self.name_
     def value(self): return self.value_
     def eval(self): yield self.name(), self.value()
+    def no_parens(self): return False
 
 class Literal(Expr):
     def __init__(self, n, v): self.name_, self.value_ = n, v
+    def no_parens(self): return True
 
 class Ident(Expr):
     def __init__(self, n): self.name_, self.scope, self.sym = n, None, None
+    def no_parens(self): return True
     def symval(self, s): return s.value(gdb.selected_frame()) if s.needs_frame else s.value()
     def value(self):
         if self.scope: return scopes[self.scope][self.name_]
@@ -72,6 +75,13 @@ class Unary(UnaryBase):
         super (Unary, self).__init__ (a)
         self.name_ = n if '{' in n else n + '{0}'
         self.value = v
+
+class Parens(UnaryBase):
+    name_ = "({0})"
+    def no_parens(self): return True
+    def eval(self):
+        for n,v in self.arg1_.eval():
+            yield  n if self.arg1_.no_parens() else '('+n+')', v
 
 class Curlies(UnaryBase):
     name_ = "({0})"
@@ -174,6 +184,7 @@ class URange(UnaryBase):
     def __init__(self, n, a1, to):
         super (URange, self).__init__ (a1)
         self.name_, self.to = n, to
+    def no_parens(self): return True
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             for i in xrange(0 if self.to else v1, v1 if self.to else sys.maxsize):
@@ -182,6 +193,7 @@ class URange(UnaryBase):
 
 class BiRange(BinaryBase):
     name_ = '{0}..{1}'
+    def no_parens(self): return True
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             for n2,v2 in self.arg2_.eval():
@@ -227,6 +239,7 @@ class Ternary(Expr):
 
 class Alias(BinaryBase):
     name_ = '{0} := {1}'
+    def no_parens(self): return True
     def eval(self):
         for n2,v2 in self.arg2_.eval():
             try: v2 = v2.reference_value()
@@ -244,9 +257,10 @@ class Enumerate(BinaryBase):
 class List(Expr):
     def __init__(self, args): self.args_ = args
     def name(self): return ','.join([e.name() for e in self.args_])
+    def no_parens(self): return self.cur.no_parens()
     def eval(self):
-        for v in self.args_:
-            for n2,v2 in v.eval():
+        for self.cur in self.args_:
+            for n2,v2 in self.cur.eval():
                 yield n2, v2
 
 class Statement(Expr):
