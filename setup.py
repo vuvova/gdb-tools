@@ -10,7 +10,14 @@ class RunTests(Command):
         from os import getcwd, execlp
         import re
         cwd=getcwd()+'/'+__file__.rstrip('setup.pyc')+'tests'
-        p=Popen(['gdb', '-batch', '-n', '-x', 'test.gdb'], cwd=cwd, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        stem=cwd+'/test.'
+        with open(stem+'gdb', 'r') as fg, open(stem+'in', 'w') as fi, open(stem+'out', 'w') as fo:
+            for l in fg:
+                if l.startswith('(gdb) '):
+                    fi.write(l[6:])
+                else:
+                    fo.write(l)
+        p=Popen(['gdb', '-batch', '-n', '-x', 'test.in'], cwd=cwd, stdout=PIPE, stderr=PIPE, universal_newlines=True)
         (o,e)=p.communicate()
         if e: raise Exception(e)
         o = re.sub(r'(=.*) 0x[0-9a-f]+', r'\1 0xXXXXX', o)

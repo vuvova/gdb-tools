@@ -1,10 +1,12 @@
 *.pyc
 .*.swp
 .gdb_history
-a.out
-test.reject
 MANIFEST
-dist/
 build/
+dist/
 gdb_tools.egg-info/
 setup.cfg
+tests/a.out
+tests/test.in
+tests/test.out
+tests/test.reject
