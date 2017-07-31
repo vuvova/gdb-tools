@@ -56,10 +56,11 @@ def octal(): return RegExMatch(r'0[0-7]*\b')
 def char(): return RegExMatch(r"'([^'\\]|"+escapes+")'")
 def string(): return RegExMatch(r'"([^\\"]|'+escapes+')*"')
 def ident(): return RegExMatch(r'[A-Za-z_]\w*')
+def gdbvar(): return RegExMatch(r'\$\w+')
 def underscores(): return RegExMatch(r'_+')
 def parens(): return [('(', expression, ')'), ('{', expression, '}')]
 def term21(): return [real, hexadecimal, decimal, octal, char, string,
-                      underscores, ident]
+                      underscores, ident, gdbvar]
 def term20(): return [ term21, parens ]
 def term19a(): return term20, Optional('#', ident)
 def term19(): return term19a, ZeroOrMore([
@@ -134,6 +135,8 @@ class DuelVisitor(PTNodeVisitor):
         c = gdb.Value(ord(c)).cast(gdb.lookup_type('char'))
         return expr.Literal(node.value, c)
     def visit_ident(self, node, ch):
+        return expr.Ident(node.value)
+    def visit_gdbvar(self, node, ch):
         return expr.Ident(node.value)
     def visit_underscores(self, node, ch):
         return expr.Underscore(node.value)

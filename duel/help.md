@@ -175,8 +175,9 @@ Command        | Description
 Operators
 ---------
 
-Variables and functions of the program being debugged can be read and
-called normally and work as expected.
+Variables and functions of the inferior (program being debugged) can be read
+and called normally and work as expected. Convenience gdb variables
+(like `$a`) and references to results (like `$1`) can be used too.
 
 The complete list of operators, in the precedence order:
 
@@ -360,7 +361,6 @@ Duel.py yet:
 
 Features that were not in the original Duel:
 * gdb scope specification: `file.c::var`
-* gdb convenience  variables and functions: `$_exitcode`, `$_streq()`, etc
 
 
 Author

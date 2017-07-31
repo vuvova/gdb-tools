@@ -41,7 +41,7 @@ Try "dl operators" or "dl longhelp"
 (gdb) dl 0x20
 0x20 = 32
 (gdb) dl 019
-Expected 'if' or ident or '&&/' or '||/' or '#/' or '+/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or '(' or '{' or '..' at position (1, 1) => '*019'.
+Expected 'if' or ident or '&&/' or '||/' or '#/' or '+/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or gdbvar or '(' or '{' or '..' at position (1, 1) => '*019'.
 (gdb) dl foo
 foo = 1
 (gdb) dl bar
@@ -415,3 +415,8 @@ strcasecmp("FOO","foo") = 0
 (gdb) dl (1,2+3)*10
 1 * 10 = 10
 (2 + 3) * 10 = 50
+(gdb) set $a=5
+(gdb) p $a
+$1 = 5
+(gdb) dl $a + $1
+$a + $1 = 10
