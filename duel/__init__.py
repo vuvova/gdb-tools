@@ -6,23 +6,19 @@ from duel.help import *
 from duel import parser, expr
 
 class duel (gdb.Command):
-    """Evaluate Duel expressions. Duel is a high level data exploration language"""
+    """Evaluate Duel expressions.
+
+Duel is a high level data exploration language.
+Type "dl" for help"""
 
     debug = False
 
     def __init__ (self):
-        super (duel, self).__init__ ("duel", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION, True)
+        super (duel, self).__init__ ("duel", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION, False)
         gdb.execute('alias -a dl = duel')
+        gdb.write("Loaded " + HEADER)
 
     def invoke (self, arg, from_tty):
-        self.init()
-        self.invoke(arg, from_tty)
-
-    def init (self):
-        gdb.write(HEADER)
-        duel.invoke = self.do_command
-
-    def do_command(self, arg, from_tty):
         if arg == "":
             gdb.write(INTRO)
         elif arg in [ '?', 'help' ]:

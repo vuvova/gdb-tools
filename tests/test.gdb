@@ -2,8 +2,21 @@
 (gdb) file a.out
 (gdb) py sys.path.append('..')
 (gdb) py import duel
+Loaded DUEL.py 0.9.5, high level data exploration language
+(gdb) help duel
+Evaluate Duel expressions.
+
+Duel is a high level data exploration language.
+Type "dl" for help
+(gdb) dl
+Supported DUEL commands:
+duel help      - give basic help (shortcut: dl ?)
+duel longhelp  - give a longer help (dl ??)
+duel examples  - show useful usage examples
+duel operators - operators summary
+duel aliases   - show current aliases
+duel clear     - clear all aliases
 (gdb) dl ?
-DUEL.py 0.9.5, high level data exploration language. "dl" for help
 Duel - Debugging U (might) Even Like -- A high level data exploration language
 
 Duel was designed to overcome problems with traditional debuggers' print
