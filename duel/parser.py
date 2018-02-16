@@ -184,7 +184,9 @@ class DuelVisitor(PTNodeVisitor):
             elif op == '~':   r = expr.Unary(op, r, lambda x: ~x)
             elif op == '++':  not_implemented()
             elif op == '--':  not_implemented()
-            else:             r = expr.Unary('('+op+')', r, lambda x: x.cast(types[op]))
+            else:
+                t = types[op]
+                r = expr.Unary('('+op+')', r, lambda x: x.cast(t))
         return r
     def visit_term17(self, node, ch):
         l = ch.pop(0)

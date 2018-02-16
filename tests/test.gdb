@@ -433,3 +433,5 @@ strcasecmp("FOO","foo") = 0
 $1 = 5
 (gdb) dl $a + $1
 $a + $1 = 10
+(gdb) dl *(char *)s
+*(char *)s = 115 's'
