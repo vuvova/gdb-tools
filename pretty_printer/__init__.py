@@ -6,6 +6,34 @@ import gdb.printing
 try: a=long(1)
 except: long=int
 
+pp_registry=dict();
+
+class PPWrapper:
+    def __init__(self, prefix, val, cb):
+        self.prefix = prefix
+        self.val = val
+        self.cb = cb
+    def to_string(self):
+        return self.prefix + self.cb(self.val)
+
+class PPDispatcher(gdb.printing.PrettyPrinter):
+    def __init__(self):
+        super(PPDispatcher, self).__init__('gdb-tools')
+    def __call__(self, val):
+        prefix = ''
+        if val.type.code == gdb.TYPE_CODE_PTR:
+            prefix = '({0}) {1:#08x} '.format(str(val.type), long(val))
+            try: val = val.dereference()
+            except: return None
+        valtype=val.type.unqualified()
+        try: cb=pp_registry[valtype.name]
+        except:
+            try: cb=pp_registry[valtype.strip_typedefs().name]
+            except: return None
+        return PPWrapper(prefix, val, cb)
+
+gdb.printing.register_pretty_printer(None, PPDispatcher(), True)
+
 def PrettyPrinter(arg):
     """@PrettyPrinter decorator.
 
@@ -32,41 +60,10 @@ def PrettyPrinter(arg):
     """
     name = getattr(arg, '__name__', arg)
 
-    def PrettyPrinterWrapperWrapperWrapper(func):
-
-        class PrettyPrinterWrapperWrapper:
-
-            class PrettyPrinterWrapper:
-                def __init__(self, prefix, val, cb):
-                    self.prefix = prefix
-                    self.val = val
-                    self.cb = cb
-                def to_string(self):
-                    return self.prefix + self.cb(self.val)
-
-            def __init__(self, name, cb):
-                self.name = name
-                self.enabled = True
-                self.cb = cb
-
-            def __call__(self, val):
-                prefix = ''
-                if val.type.code == gdb.TYPE_CODE_PTR:
-                    prefix = '({0}) {1:#08x} '.format(str(val.type), long(val))
-                    try: val = val.dereference()
-                    except: return None
-                valtype=val.type.unqualified()
-                if valtype.name == self.name:
-                    return self.PrettyPrinterWrapper(prefix, val, self.cb)
-                if valtype.strip_typedefs().name == self.name:
-                    return self.PrettyPrinterWrapper(prefix, val, self.cb)
-                return None
-
-        pp=PrettyPrinterWrapperWrapper(name, func)
-        gdb.printing.register_pretty_printer(None, pp, True)
+    def register(func):
+        pp_registry[name]=func
         return func
 
     if callable(arg):
-        return PrettyPrinterWrapperWrapperWrapper(arg)
-
-    return PrettyPrinterWrapperWrapperWrapper
+        return register(arg)
+    return register
