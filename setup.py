@@ -36,7 +36,7 @@ setup(
     url='https://github.com/vuvova/gdb-tools',
     keywords=['gdb', 'duel'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Plugins',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',

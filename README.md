@@ -5,13 +5,9 @@ comfortable.
 
 To install these tools, first install the modules with
 
-    sudo python setup.py install
+    pip install gdb-tools
 
-or
-
-    python setup.py install --user
-
-or with `easy_install` or `pip install gdb-tools`.
+or with `easy_install` or `python setup.py install [--user]`.
 
 Then you need to import corresponding modules into your gdb. Add, for example,
 
@@ -31,7 +27,7 @@ from pretty_printer import PrettyPrinter
 @PrettyPrinter
 def st_bitmap(val):
     s=''
-    for i in range((val['n_bits']+7)//8):
+    for i in range((val['n_bits']+31)//32):
         s = format(int(val['bitmap'][i]), '032b') + s
     return "b'" + s[-int(val['n_bits']):] + "'"
 ```
@@ -55,7 +51,7 @@ there.
 
 A high level language for exploring various data structures. Created by
 Michael Golan in 1993, who implemented it for gdb 4.x. "Insanely cool",
-according to gdb developers. This is **DUEL.py** a pure python implementation
+according to gdb developers. This is **DUEL.py** — a pure python implementation
 that uses gdb Python API and the [Arpeggio](https://github.com/igordejanovic/Arpeggio)
 parser. Install arpeggio (or copy it into `duel/` — it's only 20K) and
 `import duel` into your `~/.gdb.py`. Few examples of what DUEL can do:
