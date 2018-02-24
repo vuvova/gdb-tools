@@ -28,7 +28,7 @@ class RunTests(Command):
 setup(
     name='gdb-tools',
     packages=['duel', 'pretty_printer'],
-    version='1.2',
+    version='1.3',
     description='Various tools to improve the gdb experience',
     license='BSD-3-clause',
     author='Sergei Golubchik',

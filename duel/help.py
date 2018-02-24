@@ -1,6 +1,6 @@
 import re
 
-HEADER = 'DUEL.py 0.9.5, high level data exploration language\n'
+HEADER = 'DUEL.py 0.9.6, high level data exploration language\n'
 
 INTRO = """\
 Supported DUEL commands:
