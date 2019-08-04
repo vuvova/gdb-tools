@@ -1,3 +1,14 @@
+#include <string.h>
+
+int d_strcmp(const char *s1, const char *s2)
+{ return strcmp(s1, s2); }
+
+int d_strncmp(const char *s1, const char *s2, size_t n)
+{ return strncmp(s1, s2, n); }
+
+int d_strcasecmp(const char *s1, const char *s2)
+{ return strcasecmp(s1, s2); }
+
 int foo = 1;
 float bar = 2.0;
 char *s = "s1";

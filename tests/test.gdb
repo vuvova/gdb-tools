@@ -410,15 +410,15 @@ x + 7 = 11
 #/(1..4; x := 5; x + 6) = 1
 (gdb) start
 
-Temporary breakpoint 1, main () at test.c:15
-15	  return 0;
-(gdb) dl strncmp("foo", "bar", 1..3)
-strncmp("foo","bar",1) = 4
-strncmp("foo","bar",2) = 4
-strncmp("foo","bar",3) = 4
-(gdb) dl (strcmp, strcasecmp)("FOO", "foo")
-strcmp("FOO","foo") = -32
-strcasecmp("FOO","foo") = 0
+Temporary breakpoint 1, main () at test.c:26
+26	  return 0;
+(gdb) dl d_strncmp("foo", "bar", 1..3)
+d_strncmp("foo","bar",1) = 4
+d_strncmp("foo","bar",2) = 4
+d_strncmp("foo","bar",3) = 4
+(gdb) dl (d_strcmp, d_strcasecmp)("FOO", "foo")
+d_strcmp("FOO","foo") = -32
+d_strcasecmp("FOO","foo") = 0
 (gdb) dl (((1.5))+(((2))))
 (1.5 + 2) = 3.5
 (gdb) dl ("f-o-o")[((1..3))]
