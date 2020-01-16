@@ -28,8 +28,12 @@ class PPDispatcher(gdb.printing.PrettyPrinter):
         valtype=val.type.unqualified()
         try: cb=pp_registry[valtype.name]
         except:
-            try: cb=pp_registry[valtype.strip_typedefs().name]
-            except: return None
+            try:
+                n=valtype.strip_typedefs().name
+                cb=pp_registry[valtype.strip_typedefs().name]
+            except:
+                try: cb=pp_registry[n[0:n.index('<')]+'<>']
+                except: return None
         return PPWrapper(prefix, val, cb)
 
 gdb.printing.register_pretty_printer(None, PPDispatcher(), True)
