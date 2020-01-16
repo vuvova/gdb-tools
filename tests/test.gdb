@@ -36,13 +36,13 @@ Duel.py is a pure-python Duel implementation by Sergei Golubchik.
 
 Try "dl operators" or "dl longhelp"
 (gdb) dl 1
-1 = 1
+= 1
 (gdb) dl 2.0
 2.0 = 2
 (gdb) dl 2e1
 2e1 = 20
 (gdb) dl 1
-1 = 1
+= 1
 (gdb) dl 2.0
 2.0 = 2
 (gdb) dl 2e1
@@ -83,13 +83,13 @@ No symbol "unknown_var" in current context.
 (gdb) dl (2.0)
 2.0 = 2
 (gdb) dl {2.0}
-2 = 2
+= 2
 (gdb) dl {(2.0)}
-2 = 2
+= 2
 (gdb) dl (foo)
 foo = 1
 (gdb) dl {foo}
-1 = 1
+= 1
 (gdb) dl 5[1]
 Cannot subscript requested type.
 (gdb) dl s[1]
@@ -152,7 +152,7 @@ Attempt to take contents of a non-pointer value.
 (gdb) dl &&/arr[0..]
 &&/arr[0..] = 0
 (gdb) dl -5
--5 = -5
+= -5
 (gdb) dl --10
 --10 = 10
 (gdb) dl -foo
@@ -205,32 +205,32 @@ tree = 0xXXXXX <te>
 tree->right = 0xXXXXX <td>
 tree-->right[[2]] = 0xXXXXX <tb>
 (gdb) dl 1..5
-1 = 1
-2 = 2
-3 = 3
-4 = 4
-5 = 5
+= 1
+= 2
+= 3
+= 4
+= 5
 (gdb) dl 'x'..'z'
-120 'x' = 120 'x'
-121 'y' = 121 'y'
-122 'z' = 122 'z'
+= 120 'x'
+= 121 'y'
+= 122 'z'
 (gdb) dl ..3
-0 = 0
-1 = 1
-2 = 2
+= 0
+= 1
+= 2
 (gdb) dl foo..4
-1 = 1
-2 = 2
-3 = 3
-4 = 4
+= 1
+= 2
+= 3
+= 4
 (gdb) dl #/(..15)
 #/(..15) = 15
 (gdb) dl #/1..5
-1 = 1
-2 = 2
-3 = 3
-4 = 4
-5 = 5
+= 1
+= 2
+= 3
+= 4
+= 5
 (gdb) dl (..3) + (10..11)
 0 + 10 = 10
 0 + 11 = 11
@@ -249,11 +249,11 @@ arr[3] = 20
 (gdb) dl #/arr[0..]@0
 #/arr[0..]@0 = 4
 (gdb) dl 1..(2..3)
-1 = 1
-2 = 2
-1 = 1
-2 = 2
-3 = 3
+= 1
+= 2
+= 1
+= 2
+= 3
 (gdb) dl 2 < 5
 2 < 5 = 1
 (gdb) dl foo > arr[foo]
@@ -333,9 +333,9 @@ arr[1] = 10
 3 + 1 = 4
 3 + 2 = 5
 (gdb) dl 1,2,3
-1 = 1
-2 = 2
-3 = 3
+= 1
+= 2
+= 3
 (gdb) dl #/(1,4,8,16)
 #/(1,4,8,16) = 4
 (gdb) dl +/(1,4,8,16)
@@ -344,15 +344,15 @@ arr[1] = 10
 arr[0] = 5
 arr[1] = 10
 (gdb) dl 1..3,2..4,3..5
-1 = 1
-2 = 2
-3 = 3
-2 = 2
-3 = 3
-4 = 4
-3 = 3
-4 = 4
-5 = 5
+= 1
+= 2
+= 3
+= 2
+= 3
+= 4
+= 3
+= 4
+= 5
 (gdb) dl st.(i,r)
 st.i = 123
 st.r = 3.1415000000000002
@@ -373,17 +373,17 @@ tree-->right[[2]]->v = 11
 tree-->right[[2]]->left->v = 6
 tree-->right[[3]]->v = 7
 (gdb) dl (100..)#i@(i > 10)
-100 = 100
-101 = 101
-102 = 102
-103 = 103
-104 = 104
-105 = 105
-106 = 106
-107 = 107
-108 = 108
-109 = 109
-110 = 110
+= 100
+= 101
+= 102
+= 103
+= 104
+= 105
+= 106
+= 107
+= 108
+= 109
+= 110
 (gdb) dl tree-->left->(if(v>10)v else v+100)
 tree->(if(v > 10) v else v + 100) = 14
 tree->left->(if(v > 10) v else v + 100) = 12

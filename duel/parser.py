@@ -321,4 +321,8 @@ def eval(arg):
     assert len(expr.underscores) == 0
 
     for name, val in expr_tree.eval():
-        gdb.write('{0} = {1}\n'.format(name, expr.val2str(val)))
+        val = expr.val2str(val)
+        if name == val:
+            gdb.write('= {0}\n'.format(val))
+        else:
+            gdb.write('{0} = {1}\n'.format(name, val))
