@@ -22,6 +22,8 @@ class PPDispatcher(gdb.printing.PrettyPrinter):
     def __call__(self, val):
         prefix = ''
         if val.type.code == gdb.TYPE_CODE_PTR:
+            if long(val) == 0:
+                return None
             prefix = '({0}) {1:#08x} '.format(str(val.type), long(val))
             try: val = val.dereference()
             except: return None
