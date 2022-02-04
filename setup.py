@@ -7,9 +7,9 @@ class RunTests(Command):
     def finalize_options(self): pass
     def run(self):
         from subprocess import Popen, PIPE
-        from os import getcwd, execlp
+        from os import execlp
         import re
-        cwd=getcwd()+'/'+__file__.rstrip('setup.pyc')+'tests'
+        cwd=__file__.rstrip('setup.pyc')+'tests'
         stem=cwd+'/test.'
         with open(stem+'gdb', 'r') as fg, open(stem+'in', 'w') as fi, open(stem+'out', 'w') as fo:
             for l in fg:
