@@ -36,6 +36,19 @@ class Expr(object):
     def value(self): return self.value_
     def eval(self): yield self.name(), self.value()
     def no_parens(self): return False
+    def scoped_eval(self, v):
+        g = self.eval()
+        while True:
+            underscores.append(v)
+            scopes.append(v)
+            try:
+                p = next(g)
+            except StopIteration:
+                return
+            finally:
+                scopes.pop()
+                underscores.pop()
+            yield p
 
 class Literal(Expr):
     def __init__(self, n, v): self.name_, self.value_ = n, v
@@ -114,15 +127,10 @@ class Struct(BinaryBase):
     def __init__(self, a1, n, a2):
         super (Struct, self).__init__ (a1, a2)
         self.name_ = n
-    @scoped
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            underscores.append(v1)
-            scopes.append(v1)
-            for n2,v2 in self.arg2_.eval():
+            for n2,v2 in self.arg2_.scoped_eval(v1):
                 yield self.name_.format(n1, n2), v2
-            scopes.pop()
-            underscores.pop()
 
 class StructWalk(BinaryBase):
     name_ = '{0}-->{1}'

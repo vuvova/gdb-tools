@@ -357,6 +357,12 @@ arr[1] = 10
 (gdb) dl st.(i,r)
 st.i = 123
 st.r = 3.1415000000000002
+(gdb) dl st.(i + r)
+st.(i + r) = 126.14149999999999
+(gdb) dl (st.i) + r
+No symbol "r" in current context.
+(gdb) dl st.i + r
+No symbol "r" in current context.
 (gdb) dl tree-->(left,right)->v
 tree->v = 14
 tree->left->v = 12
