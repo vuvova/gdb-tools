@@ -7,7 +7,7 @@ except:
 
 aliases = dict()
 scopes = list()
-underscores = list()
+dummy_scope = gdb.Value(0)
 
 def scoped(f):
     def wrapped_eval(self):
@@ -15,15 +15,6 @@ def scoped(f):
             for x in f(self): yield x
         except GeneratorExit:
             scopes.pop()
-            underscores.pop()
-    return wrapped_eval
-
-def underscored(f):
-    def wrapped_eval(self):
-        try:
-            for x in f(self): yield x
-        except GeneratorExit:
-            underscores.pop()
     return wrapped_eval
 
 def val2str(v):
@@ -39,7 +30,6 @@ class Expr(object):
     def scoped_eval(self, v):
         g = self.eval()
         while True:
-            underscores.append(v)
             scopes.append(v)
             try:
                 p = next(g)
@@ -47,7 +37,6 @@ class Expr(object):
                 return
             finally:
                 scopes.pop()
-                underscores.pop()
             yield p
 
 class Literal(Expr):
@@ -73,7 +62,7 @@ class Ident(Expr):
 class Underscore(Expr):
     def __init__(self, n): self.name_ = n
     def eval(self):
-        v = underscores[-len(self.name_)]
+        v = scopes[-len(self.name_)]
         yield val2str(v), v
 
 class UnaryBase(Expr):
@@ -151,14 +140,12 @@ class StructWalk(BinaryBase):
             while queue:
                 n1, v1 = queue.pop()
                 if not v1: continue
-                underscores.append(v1)
                 scopes.append(v1.dereference())
                 yield self.path2str(n1), v1
                 l = len(queue)
                 for n2,v2 in self.arg2_.eval():
                     queue.insert(l, (n1+[n2], v2))
                 scopes.pop()
-                underscores.pop()
 
 class TakeNth(BinaryBase):
     name_ = '{0}[[{1}]]'
@@ -176,7 +163,6 @@ class Until(BinaryBase):
         if isinstance(self.arg2_, Literal): f = lambda x,y: x == y
         else: f= lambda x,y: y
         for n1,v1 in self.arg1_.eval():
-            underscores.append(v1)
             scopes.append(v1)
             stop, output = False, False
             for n2,v2 in self.arg2_.eval():
@@ -185,7 +171,6 @@ class Until(BinaryBase):
                 if stop and output: break
             if output: yield n1, v1
             scopes.pop()
-            underscores.pop()
             if stop: break
 
 class URange(UnaryBase):
@@ -282,13 +267,13 @@ class Statement(Expr):
 
 class Foreach(BinaryBase):
     name_ = '{0} => {1}'
-    @underscored
+    @scoped
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            underscores.append(v1)
+            scopes.append(v1)
             for n2,v2 in self.arg2_.eval():
                 yield n2, v2
-            underscores.pop()
+            scopes.pop()
 
 class Call(BinaryBase):
     name_ = '{0}({1})'
