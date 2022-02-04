@@ -4,6 +4,7 @@
 (gdb) py import duel
 Loaded DUEL.py 0.9.7, high level data exploration language
 (gdb) help duel
+duel, dl
 Evaluate Duel expressions.
 
 Duel is a high level data exploration language.
@@ -54,7 +55,7 @@ Try "dl operators" or "dl longhelp"
 (gdb) dl 0x20
 0x20 = 32
 (gdb) dl 019
-Expected 'if' or ident or '&&/' or '||/' or '#/' or '+/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or ident or gdbvar or '(' or '{' or '..' at position (1, 1) => '*019'.
+Expected 'if' or ident or '&&/' or '||/' or '#/' or '+/' or '-' or '*' or '&' or '!' or '~' or '(cast)' or real or hexadecimal or decimal or octal or char or string or underscores or gdbvar or '(' or '{' or '..' at position (1, 1) => '*019'.
 (gdb) dl foo
 foo = 1
 (gdb) dl bar
