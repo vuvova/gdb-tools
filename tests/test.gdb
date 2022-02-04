@@ -124,6 +124,8 @@ tree-->left[[3]]->v = 0
 tree-->left->v[[1]] = 12
 (gdb) dl tree-->left->v[[2]]
 tree-->left->v[[2]] = 8
+(gdb) dl tree-->left->v + v
+No symbol "v" in current context.
 (gdb) dl (*tree).v
 (*tree).v = 14
 (gdb) dl *tree.v
@@ -198,13 +200,15 @@ foo && 0 = 0
 foo || 0 = 1
 (gdb) dl tree->left->left->left->v || 0
 tree->left->left->left->v || 0 = 0
-(gdb) dl tree-->right->v @ (v <= 11)
-tree->v = 14
-tree->right->v = 13
+(gdb) dl tree-->right->(v @ (v <= 11))
+tree->(v) = 14
+tree->right->(v) = 13
 (gdb) dl tree-->right @ (v <= 11, 0)
 tree = 0xXXXXX <te>
 tree->right = 0xXXXXX <td>
 tree-->right[[2]] = 0xXXXXX <tb>
+(gdb) dl tree-->right @ (v <= 11, 0) + v
+No symbol "v" in current context.
 (gdb) dl 1..5
 = 1
 = 2
@@ -326,6 +330,8 @@ Aliases table empty
 (gdb) dl ..2 => arr[_]
 arr[0] = 5
 arr[1] = 10
+(gdb) dl (..2 => arr[_]) + _
+list index out of range
 (gdb) dl 1..3 => .._ => __ + _
 1 + 0 = 1
 2 + 0 = 2

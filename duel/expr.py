@@ -9,14 +9,6 @@ aliases = dict()
 scopes = list()
 dummy_scope = gdb.Value(0)
 
-def scoped(f):
-    def wrapped_eval(self):
-        try:
-            for x in f(self): yield x
-        except GeneratorExit:
-            scopes.pop()
-    return wrapped_eval
-
 def val2str(v):
     try: v = v.referenced_value() if v.type.code==gdb.TYPE_CODE_REF else v
     except: pass
@@ -133,19 +125,16 @@ class StructWalk(BinaryBase):
                 else: s += '-->{0}[[{1}]]'.format(prev, cnt)
                 prev, cnt = m, 1
         return s
-    @scoped
     def eval(self):
         for n1,v1 in self.arg1_.eval():
             queue = [ ([n1], v1) ]
             while queue:
                 n1, v1 = queue.pop()
                 if not v1: continue
-                scopes.append(v1.dereference())
                 yield self.path2str(n1), v1
                 l = len(queue)
-                for n2,v2 in self.arg2_.eval():
+                for n2,v2 in self.arg2_.scoped_eval(v1.dereference()):
                     queue.insert(l, (n1+[n2], v2))
-                scopes.pop()
 
 class TakeNth(BinaryBase):
     name_ = '{0}[[{1}]]'
@@ -158,19 +147,16 @@ class TakeNth(BinaryBase):
 
 class Until(BinaryBase):
     name_ = '{0}@{1}'
-    @scoped
     def eval(self):
         if isinstance(self.arg2_, Literal): f = lambda x,y: x == y
         else: f= lambda x,y: y
         for n1,v1 in self.arg1_.eval():
-            scopes.append(v1)
             stop, output = False, False
-            for n2,v2 in self.arg2_.eval():
+            for n2,v2 in self.arg2_.scoped_eval(v1):
                 if f(v1, v2): stop = True
                 else: output = True
                 if stop and output: break
             if output: yield n1, v1
-            scopes.pop()
             if stop: break
 
 class URange(UnaryBase):
@@ -267,13 +253,10 @@ class Statement(Expr):
 
 class Foreach(BinaryBase):
     name_ = '{0} => {1}'
-    @scoped
     def eval(self):
         for n1,v1 in self.arg1_.eval():
-            scopes.append(v1)
-            for n2,v2 in self.arg2_.eval():
+            for n2,v2 in self.arg2_.scoped_eval(v1):
                 yield n2, v2
-            scopes.pop()
 
 class Call(BinaryBase):
     name_ = '{0}({1})'
