@@ -7,7 +7,6 @@ except:
 
 aliases = dict()
 scopes = list()
-dummy_scope = gdb.Value(0)
 
 def val2str(v):
     try: v = v.referenced_value() if v.type.code==gdb.TYPE_CODE_REF else v
