@@ -7,8 +7,6 @@ To install these tools, first install the modules with
 
     pip install gdb-tools
 
-or with `easy_install` or `python setup.py install [--user]`.
-
 Then you need to import corresponding modules into your gdb. Add, for example,
 
     py import duel
@@ -74,4 +72,4 @@ Command | Explanation
 `dl #/(head-->next-val>?5)` | count those over 5
 `dl head-->(next!=?head)` | expand cyclic linked list
 
-Or read the [manual](duel/help.md).
+Or read the [manual](https://github.com/vuvova/gdb-tools/blob/arpeggio/duel/help.md).
