@@ -13,6 +13,15 @@ def val2str(v):
     except: pass
     return str(v)
 
+# this uses gdb convenience variables to avoid convering all arguments to strings
+def parse_and_call(func, *args):
+    s = func + '('
+    for i, a in enumerate(args):
+        n = 'duel_eval_func_call_'+str(i)
+        gdb.set_convenience_variable(n, a)
+        s += '$' + n + ','
+    return gdb.parse_and_eval(s[0:-1]+')')
+
 class Expr(object):
     def name(self): return self.name_
     def value(self): return self.value_
@@ -272,6 +281,8 @@ class Call(BinaryBase):
             nams = [] + args
             vals = [] + args
             cur = -1
+            if v1.type.code == gdb.TYPE_CODE_INTERNAL_FUNCTION:
+                v1=lambda *args: parse_and_call(n1, *args)
             while True:
                 while cur < len(args)-1:
                     cur += 1

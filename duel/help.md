@@ -357,7 +357,7 @@ Walk the binary tree:
 
 Select matching strings from the array:
 
-    dl strncmp(items[i:=0..20], "foo", 3) ==? 0 => items[i]
+    dl $_regex(items[i:=0..20], "foo") ==? 1 => items[i]
 
 Find first 10 primes greater than 1000:
 
@@ -376,6 +376,8 @@ Duel.py yet:
 
 Features that were not in the original Duel:
 * gdb scope specification: `file.c::var`
+* gdb convenience variables (`$a`), references to results (`$1`) and
+  functions (`$_streq`)
 * negative indexes in `[[ ]]` operator
 
 

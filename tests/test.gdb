@@ -458,3 +458,7 @@ $1 = 5
 $a + $1 = 10
 (gdb) dl *(char *)s
 *(char *)s = 115 's'
+(gdb) dl $_strlen(s)
+$_strlen(s) = 2
+(gdb) dl $_regex(s, ".*[0-9]")
+$_regex(s,".*[0-9]") = 1
