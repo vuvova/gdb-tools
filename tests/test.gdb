@@ -1,4 +1,4 @@
-(gdb) shell gcc test.c -O0 -ggdb3
+(gdb) shell g++ test.cc -O0 -ggdb3
 (gdb) file a.out
 (gdb) py sys.path.append('..')
 (gdb) py import duel
@@ -171,11 +171,11 @@ Attempt to take contents of a non-pointer value.
 (gdb) dl -foo
 -foo = -1
 (gdb) dl !0
-!0 = 1
+!0 = true
 (gdb) dl !foo
-!foo = 0
+!foo = false
 (gdb) dl !{foo}
-!1 = 0
+!1 = false
 (gdb) dl foo + 1
 foo + 1 = 2
 (gdb) dl ~5
@@ -270,15 +270,15 @@ arr[3] = 20
 = 2
 = 3
 (gdb) dl 2 < 5
-2 < 5 = 1
+2 < 5 = true
 (gdb) dl foo > arr[foo]
-foo > arr[foo] = 0
+foo > arr[foo] = false
 (gdb) dl 1 >= 2
-1 >= 2 = 0
+1 >= 2 = false
 (gdb) dl foo == 10
-foo == 10 = 0
+foo == 10 = false
 (gdb) dl st.i != 20
-st.i != 20 = 1
+st.i != 20 = true
 (gdb) dl 1 ? 2 : 3
 1 ? 2 : 3 = 2
 (gdb) dl foo ? 2 ? 3 : 4 : 5
@@ -433,7 +433,7 @@ x + 7 = 11
 #/(1..4; x := 5; x + 6) = 1
 (gdb) start
 
-Temporary breakpoint 1, main () at test.c:26
+Temporary breakpoint 1, main () at test.cc:26
 26	  return 0;
 (gdb) dl d_strncmp("foo", "bar", 1..3)
 d_strncmp("foo","bar",1) = 4
@@ -461,4 +461,4 @@ $a + $1 = 10
 (gdb) dl $_strlen(s)
 $_strlen(s) = 2
 (gdb) dl $_regex(s, ".*[0-9]")
-$_regex(s,".*[0-9]") = 1
+$_regex(s,".*[0-9]") = true

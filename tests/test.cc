@@ -11,7 +11,7 @@ int d_strcasecmp(const char *s1, const char *s2)
 
 int foo = 1;
 float bar = 2.0;
-char *s = "s1";
+const char *s = "s1";
 long arr[] = {5, 10, 15, 20, 0};
 struct {unsigned i; double r;} st = {123, 3.1415};
 struct t { int v; struct t *left, *right; };
