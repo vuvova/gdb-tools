@@ -124,6 +124,16 @@ tree-->left[[3]]->v = 0
 tree-->left->v[[1]] = 12
 (gdb) dl tree-->left->v[[2]]
 tree-->left->v[[2]] = 8
+(gdb) dl tree-->left->v[[5]]
+generator raised StopIteration
+(gdb) dl tree-->left->v[[-1]]
+tree-->left->v[[-1]] = 0
+(gdb) dl tree-->left->v[[-2]]
+tree-->left->v[[-2]] = 8
+(gdb) dl tree-->left->v[[{-3}]]
+tree-->left->v[[1]] = 12
+(gdb) dl tree-->left->v[[-5]]
+generator raised StopIteration
 (gdb) dl tree-->left->v + v
 No symbol "v" in current context.
 (gdb) dl (*tree).v

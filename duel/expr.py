@@ -138,7 +138,13 @@ class StructWalk(BinaryBase):
 class TakeNth(BinaryBase):
     name_ = '{0}[[{1}]]'
     def eval(self):
+        l = None
         for n2,v2 in self.arg2_.eval():
+            if v2 < 0:
+                if l is None: l = sum(1 for i in self.arg1_.eval())
+                v2 += l
+                if isinstance(self.arg2_, Curlies): n2 = str(v2)
+                if v2 < 0: raise StopIteration
             val = self.arg1_.eval()
             for i in xrange(0,v2): next(val)
             n1, v1 = next(val)

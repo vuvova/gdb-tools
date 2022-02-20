@@ -99,8 +99,18 @@ For example,
 
     (gdb) dl head-->next[[50..60]]->data
 
-return the 50th through the 60th elements in the list. The `#/x`
-operator counts the number of values, so
+return the 50th through the 60th elements in the list. By specifying a
+negative number one can count from the end:
+
+    (gdb) head-->next[[-1]]->data
+    head-->next[[-1]]->data = 123
+
+And curly braces evaluate the offset, as usual:
+
+    (gdb) head-->next[[{-1}]]->data
+    head-->next[[73]]->data = 123
+
+The `#/x` operator counts the number of values, so
 
     (gdb) dl #/( head-->next->data >? 50 )
 
@@ -190,11 +200,12 @@ The complete list of operators, in the precedence order:
   `x`. The third one walks the linked list, evaluating `x`, `x->y`,
   `x->y->y`, etc until NULL. The fourth is a familiar C array element
   access, the fifth takes the `y`-th value in the sequence of values
-  of `x`. The last one stops `x` from generating values as soon as `y`
-  (evaluated in the scope of `x`) becomes true. If `y` is a literal,
-  stops as soon as `x` value becomes equal to `y`. If `y` is a
-  sequence of values, stops when at least one value in the sequence is
-  true, and prints `x` if at least one value in the sequence is false.
+  of `x` (counting from the end, if `y` is negative). The last one
+  stops `x` from generating values as soon as `y` (evaluated in the
+  scope of `x`) becomes true. If `y` is a literal, stops as soon as
+  `x` value becomes equal to `y`. If `y` is a sequence of values,
+  stops when at least one value in the sequence is true, and prints
+  `x` if at least one value in the sequence is false.
 * `(cast)x`, `-x`, `*x`, `&x`, `!x`, `~x`, `#/x`, `+/x`, `&&/x`, `||/x` -
   first six are conventional unary C operators, the last four are
   *grouping* operators.  The first one counts the numbers of values of
@@ -332,6 +343,10 @@ Find the last element in a linked list:
 
     dl x-->y[[#/x-->y - 1]]
 
+Or just
+
+    dl x-->y[[-1]]
+
 Walk the cyclic linked list (start from `head`, walk until seeing `head` again):
 
     dl head-->(next!=?head)
@@ -361,6 +376,7 @@ Duel.py yet:
 
 Features that were not in the original Duel:
 * gdb scope specification: `file.c::var`
+* negative indexes in `[[ ]]` operator
 
 
 Author
