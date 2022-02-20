@@ -5,6 +5,8 @@ import traceback
 from duel.help import *
 from duel import parser, expr
 
+VERSION='1.5'
+
 class duel (gdb.Command):
     """Evaluate Duel expressions.
 
@@ -16,7 +18,7 @@ Type "dl" for help"""
     def __init__ (self):
         super (duel, self).__init__ ("duel", gdb.COMMAND_DATA, gdb.COMPLETE_EXPRESSION, False)
         gdb.execute('alias -a dl = duel')
-        gdb.write("Loaded " + HEADER)
+        gdb.write("Loaded DUEL.py " + VERSION + ", high level data exploration language\n")
 
     def invoke (self, arg, from_tty):
         if arg == "":

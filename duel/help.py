@@ -1,7 +1,5 @@
 import re
 
-HEADER = 'DUEL.py 0.9.7, high level data exploration language\n'
-
 INTRO = """\
 Supported DUEL commands:
 duel help      - give basic help (shortcut: dl ?)
