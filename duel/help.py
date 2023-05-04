@@ -33,6 +33,6 @@ Duel.py is a pure-python Duel implementation by Sergei Golubchik.
 Try "dl operators" or "dl longhelp"
 """
 
-OPERATORS = re.sub(r'^(?s).*\nOperators\n---------\n\n*(.*?\n)[^\n]+\n-----+\n.*$', r'\1', LONGHELP)
-EXAMPLES = re.sub(r'^(?s).*\nExamples\n--------\n\n*(.*?\n)[^\n]+\n-----+\n.*$', r'\1', LONGHELP)
+OPERATORS = re.sub(r'(?s)^.*\nOperators\n---------\n\n*(.*?\n)[^\n]+\n-----+\n.*$', r'\1', LONGHELP)
+EXAMPLES = re.sub(r'(?s)^.*\nExamples\n--------\n\n*(.*?\n)[^\n]+\n-----+\n.*$', r'\1', LONGHELP)
 EXAMPLES = re.sub(r'\n\n', r'\n', EXAMPLES)
