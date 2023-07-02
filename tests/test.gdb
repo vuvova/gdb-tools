@@ -432,6 +432,7 @@ x + 7 = 11
 (gdb) dl #/(1..4;x:=5;x+6)
 #/(1..4; x := 5; x + 6) = 1
 (gdb) start
+[Thread debugging using libthread_db enabled]
 
 Temporary breakpoint 1, main () at test.cc:26
 26	  return 0;

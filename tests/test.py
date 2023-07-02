@@ -17,5 +17,6 @@ p=Popen(['gdb', '-batch', '-n', '-x', 'test.in'], cwd=dirname(stem), stdout=PIPE
 if e: raise Exception(e)
 o = re.sub(r'(=.*) 0x[0-9a-f]+', r'\1 0xXXXXX', o)
 o = re.sub(r'Temporary breakpoint 1 at .*\n', '', o)
+o = re.sub(r'\n.*/lib.*\n', '\n', o)
 with open(stem+'reject', 'w') as f: f.write(o)
 execlp('diff', 'diff', '-us', stem+'out', stem+'reject')
