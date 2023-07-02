@@ -13,7 +13,7 @@ int foo = 1;
 float bar = 2.0;
 const char *s = "s1";
 long arr[] = {5, 10, 15, 20, 0};
-struct {unsigned i; double r;} st = {123, 3.1415};
+struct {unsigned i; double _r;} st = {123, 3.1415};
 struct t { int v; struct t *left, *right; };
 struct t t0={ 0,  0,  0}, t1={ 1,  0,  0}, t2={ 2,  0,  0}, t3={ 3,  0,  0},
          t4={ 4,  0,  0}, t5={ 5,  0,  0}, t6={ 6,  0,  0}, t7={ 7,  0,  0},

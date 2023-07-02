@@ -57,7 +57,7 @@ def char(): return RegExMatch(r"'([^'\\]|"+escapes+")'")
 def string(): return RegExMatch(r'"([^\\"]|'+escapes+')*"')
 def ident(): return RegExMatch(r'[A-Za-z_]\w*')
 def gdbvar(): return RegExMatch(r'\$\w+')
-def underscores(): return RegExMatch(r'_+')
+def underscores(): return RegExMatch(r'_+\b')
 def parens(): return [('(', expression, ')'), ('{', expression, '}')]
 def term21(): return [real, hexadecimal, decimal, octal, char, string,
                       underscores, ident, gdbvar]

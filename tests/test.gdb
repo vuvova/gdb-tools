@@ -103,9 +103,9 @@ arr[foo] = 10
 arr[1] = 10
 (gdb) dl st.i
 st.i = 123
-(gdb) dl st.(r)
-st.r = 3.1415000000000002
-(gdb) dl st.{r}
+(gdb) dl st.(_r)
+st._r = 3.1415000000000002
+(gdb) dl st.{_r}
 st.3.1415000000000002 = 3.1415000000000002
 (gdb) dl tree->v
 tree->v = 14
@@ -184,7 +184,7 @@ foo + 1 = 2
 ~0xFF77 = -65400
 (gdb) dl 10 * 3.14
 10 * 3.14 = 31.400000000000002
-(gdb) dl arr[foo] / {st.r}
+(gdb) dl arr[foo] / {st._r}
 arr[foo] / 3.1415000000000002 = 3.1831927423205473
 (gdb) dl st.i % 10
 st.i % 10 = 3
@@ -370,15 +370,15 @@ arr[1] = 10
 = 3
 = 4
 = 5
-(gdb) dl st.(i,r)
+(gdb) dl st.(i,_r)
 st.i = 123
-st.r = 3.1415000000000002
-(gdb) dl st.(i + r)
-st.(i + r) = 126.14149999999999
-(gdb) dl (st.i) + r
-No symbol "r" in current context.
-(gdb) dl st.i + r
-No symbol "r" in current context.
+st._r = 3.1415000000000002
+(gdb) dl st.(i + _r)
+st.(i + _r) = 126.14149999999999
+(gdb) dl (st.i) + _r
+No symbol "_r" in current context.
+(gdb) dl st.i + _r
+No symbol "_r" in current context.
 (gdb) dl tree-->(left,right)->v
 tree->v = 14
 tree->left->v = 12
