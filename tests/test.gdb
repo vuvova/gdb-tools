@@ -2,7 +2,7 @@
 (gdb) file a.out
 (gdb) py sys.path.append('..')
 (gdb) py import duel
-Loaded DUEL.py 1.5, high level data exploration language
+Loaded DUEL.py 1.6, high level data exploration language
 (gdb) help duel
 duel, dl
 Evaluate Duel expressions.

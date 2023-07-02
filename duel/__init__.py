@@ -5,7 +5,7 @@ import traceback
 from duel.help import *
 from duel import parser, expr
 
-VERSION='1.5'
+VERSION='1.6'
 
 class duel (gdb.Command):
     """Evaluate Duel expressions.
